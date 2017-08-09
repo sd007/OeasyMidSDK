@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="include">
+      <UniqueIdentifier>{1a715cbc-a953-4e80-8d4e-99c946989485}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{727cbeda-efd5-4e8c-841a-f9809b2f3b74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\common">
+      <UniqueIdentifier>{97dce62a-5dad-46cd-a725-c37a5f27a6dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\device">
+      <UniqueIdentifier>{a11ae180-27d5-4d70-b00d-5b9114d455c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\platform">
+      <UniqueIdentifier>{674ac2a4-f9a9-41f6-81d3-9e0bcc5f17be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tools">
+      <UniqueIdentifier>{b7bac43d-9509-4e66-bc72-fd4492e900e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\device\camera">
+      <UniqueIdentifier>{b57e47cd-b4a9-4fba-9e9a-da1df0aee032}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\device\intercom">
+      <UniqueIdentifier>{644babc8-48d0-4766-8e14-b556475f9c38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\device\camera\dahua">
+      <UniqueIdentifier>{099ff207-f3d0-45d5-882c-2cba73a7ff06}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\device\camera\hkvision">
+      <UniqueIdentifier>{d869c7d6-ff9b-433d-82b6-cf195c4ea467}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\device\intercom\oeasyintercom">
+      <UniqueIdentifier>{9c9bc7a8-6bdf-423c-aa32-98666e4db451}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\tools\log">
+      <UniqueIdentifier>{83c19bc2-e916-4c4f-b02e-194af0319a72}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\include\OeasyMidSdk.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\device\camera\dahua\dhcamera.h">
+      <Filter>src\device\camera\dahua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\device\camera\hikvision\hkcamera.h">
+      <Filter>src\device\camera\hkvision</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\device\camera\cameradefine.h">
+      <Filter>src\device\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\device\camera\icamera.h">
+      <Filter>src\device\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\device\intercom\oeasyintercom\oeasyintercom.h">
+      <Filter>src\device\intercom\oeasyintercom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\device\intercom\iintercom.h">
+      <Filter>src\device\intercom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\device\intercom\intercomdefine.h">
+      <Filter>src\device\intercom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\tools\log\log4cpp.h">
+      <Filter>src\tools\log</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\platform\BaseType.h">
+      <Filter>src\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\device\devicefactory.h">
+      <Filter>src\device</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\device\camera\dahua\dhcamera.cpp">
+      <Filter>src\device\camera\dahua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\device\camera\hikvision\hkcamera.cpp">
+      <Filter>src\device\camera\hkvision</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\device\intercom\oeasyintercom\oeasyintercom.cpp">
+      <Filter>src\device\intercom\oeasyintercom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\tools\log\log4cpp.cpp">
+      <Filter>src\tools\log</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\OeasyMidSdk.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\device\devicefactory.cpp">
+      <Filter>src\device</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
+</Project>
