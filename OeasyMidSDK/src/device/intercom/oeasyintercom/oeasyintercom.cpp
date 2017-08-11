@@ -11,7 +11,7 @@ OeasyIntercom::~OeasyIntercom()
 
 }
 
-INTERCOMTYPE OeasyIntercom::getIntercomType()
+_INTERCOMTYPE OeasyIntercom::getIntercomType()
 {
-	return OEASY;
+	return _OEASYLOG_INTERCOM;
 }

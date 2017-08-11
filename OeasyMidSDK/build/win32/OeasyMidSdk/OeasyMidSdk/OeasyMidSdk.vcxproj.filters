@@ -1,10 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="资源文件">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
     <Filter Include="include">
       <UniqueIdentifier>{1a715cbc-a953-4e80-8d4e-99c946989485}</UniqueIdentifier>
     </Filter>
@@ -41,6 +37,15 @@
     <Filter Include="src\tools\log">
       <UniqueIdentifier>{83c19bc2-e916-4c4f-b02e-194af0319a72}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\device\alarmhost">
+      <UniqueIdentifier>{8ee13c0b-95f1-4efd-a741-88b15c1dcf59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\device\alarmhost\hikvison">
+      <UniqueIdentifier>{fbec7bcd-231d-4768-b397-b77e943b9f20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\platform\thread">
+      <UniqueIdentifier>{cf8668f5-75e7-4287-8a75-a3596e0aafd1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\include\OeasyMidSdk.h">
@@ -52,9 +57,6 @@
     <ClInclude Include="..\..\..\..\src\device\camera\hikvision\hkcamera.h">
       <Filter>src\device\camera\hkvision</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\src\device\camera\cameradefine.h">
-      <Filter>src\device\camera</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\src\device\camera\icamera.h">
       <Filter>src\device\camera</Filter>
     </ClInclude>
@@ -64,9 +66,6 @@
     <ClInclude Include="..\..\..\..\src\device\intercom\iintercom.h">
       <Filter>src\device\intercom</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\src\device\intercom\intercomdefine.h">
-      <Filter>src\device\intercom</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\src\tools\log\log4cpp.h">
       <Filter>src\tools\log</Filter>
     </ClInclude>
@@ -74,6 +73,42 @@
       <Filter>src\platform</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\device\devicefactory.h">
+      <Filter>src\device</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\device\alarmhost\ialarmhost.h">
+      <Filter>src\device\alarmhost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\device\alarmhost\hikvision\hkalarmhost.h">
+      <Filter>src\device\alarmhost\hikvison</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\device\alarmhost\alarmhostdefine.h">
+      <Filter>src\device\alarmhost</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\device\camera\cameradefine.h">
+      <Filter>src\device\camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\device\intercom\intercomdefine.h">
+      <Filter>src\device\intercom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\include\OeasyMidDefines.h">
+      <Filter>include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\ApiImpl.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\common\HandleManager.h">
+      <Filter>src\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\platform\thread\AutoLock.h">
+      <Filter>src\platform\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\platform\thread\MsgThread.hpp">
+      <Filter>src\platform\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\platform\thread\Thread.h">
+      <Filter>src\platform\thread</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\device\idevice.h">
       <Filter>src\device</Filter>
     </ClInclude>
   </ItemGroup>
@@ -96,8 +131,20 @@
     <ClCompile Include="..\..\..\..\src\device\devicefactory.cpp">
       <Filter>src\device</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <ClCompile Include="..\..\..\..\src\device\alarmhost\hikvision\hkalarmhost.cpp">
+      <Filter>src\device\alarmhost\hikvison</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\common\ApiImpl.cpp">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\common\HandleManager.cpp">
+      <Filter>src\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\platform\thread\AutoLock.cpp">
+      <Filter>src\platform\thread</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\platform\thread\Thread.cpp">
+      <Filter>src\platform\thread</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

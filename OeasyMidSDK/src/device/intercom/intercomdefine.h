@@ -3,10 +3,11 @@
 
 #pragma pack(push,1)
 
+//可视对讲类型
 typedef enum{
-	OEASY, 
-	OTHERINERCOM
-}INTERCOMTYPE;
+	_OEASYLOG_INTERCOM, 
+	_OTHER_INERCOM
+}_INTERCOMTYPE;
 
 #pragma pack(pop) 
 #endif

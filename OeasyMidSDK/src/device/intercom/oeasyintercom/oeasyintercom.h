@@ -1,3 +1,5 @@
+#ifndef OEASYLOG_INTERCOM_H
+#define OEASYLOG_INTERCOM_H
 #include "intercomdefine.h"
 #include "iintercom.h"
 
@@ -7,6 +9,7 @@ public:
 	OeasyIntercom();
 	virtual ~OeasyIntercom();
 
-	virtual INTERCOMTYPE getIntercomType();
+	virtual _INTERCOMTYPE getIntercomType();
 };
 
+#endif //OEASYLOG_INTERCOM_H

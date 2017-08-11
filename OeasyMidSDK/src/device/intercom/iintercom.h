@@ -1,11 +1,12 @@
 #ifndef IINTERCOM_H
 #define IINTERCOM_H
 #include "intercomdefine.h"
+#include "idevice.h"
 
-class IItercom 
+class IItercom :public IDevice
 {
 public:
-	virtual INTERCOMTYPE getIntercomType() = 0;
+	virtual _INTERCOMTYPE getIntercomType() = 0;
 		
 };
 

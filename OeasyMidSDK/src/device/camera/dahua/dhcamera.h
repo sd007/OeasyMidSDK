@@ -1,3 +1,6 @@
+#ifndef DH_CAMERA_H
+#define DH_CAMERA_H
+
 #include "cameradefine.h"
 #include "icamera.h"
 
@@ -8,6 +11,8 @@ namespace OeasyMid_DH{
 		DHCamera();
 		virtual ~DHCamera();
 
-		virtual CAMERATYPE getCameraType();
+		virtual _CAMERATYPE getCameraType();
 	};
 }
+
+#endif //DH_CAMERA_H

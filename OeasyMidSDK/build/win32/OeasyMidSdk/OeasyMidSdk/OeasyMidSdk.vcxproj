@@ -37,18 +37,19 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\..\..\include;..\..\..\..\src;..\..\..\..\src\common;..\..\..\..\src\device;..\..\..\..\src\platform;..\..\..\..\src\tools;..\..\..\..\src\device\camera;..\..\..\..\src\device\intercom;..\..\..\..\src\device\camera\dahua;..\..\..\..\src\device\camera\hikvision;..\..\..\..\src\device\intercom\oeasyintercom;..\..\..\..\src\tools\log;..\..\..\..\src\tools\log\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\..\libs\win32\log\debug;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\include;..\..\..\..\src;..\..\..\..\src\common;..\..\..\..\src\device;..\..\..\..\src\platform;..\..\..\..\src\tools;..\..\..\..\src\device\camera;..\..\..\..\src\device\intercom;..\..\..\..\src\device\camera\dahua;..\..\..\..\src\device\camera\hikvision;..\..\..\..\src\device\intercom\oeasyintercom;..\..\..\..\src\tools\log;..\..\..\..\src\tools\log\include;..\..\..\..\libs\win32\HikVision\include;..\..\..\..\src\device\alarmhost;..\..\..\..\src\device\alarmhost\hikvision;..\..\..\..\src\platform\thread;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\libs\win32\log\debug;..\..\..\..\libs\win32\HikVision\libs;..\..\..\..\libs\win32\HikVision\libs\HCNetSDKCom;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>_USE_IPC;_USE_INTERCOM;_USE_ALARMHOST;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>log4cpp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>log4cpp.lib;GdiPlus.lib;HCCore.lib;HCNetSDK.lib;PlayCtrl.lib;HCAlarm.lib;HCGeneralCfgMgr.lib;HCPreview.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -65,28 +66,40 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\include\OeasyMidDefines.h" />
     <ClInclude Include="..\..\..\..\include\OeasyMidSdk.h" />
+    <ClInclude Include="..\..\..\..\src\common\ApiImpl.h" />
+    <ClInclude Include="..\..\..\..\src\common\HandleManager.h" />
+    <ClInclude Include="..\..\..\..\src\device\alarmhost\alarmhostdefine.h" />
+    <ClInclude Include="..\..\..\..\src\device\alarmhost\hikvision\hkalarmhost.h" />
+    <ClInclude Include="..\..\..\..\src\device\alarmhost\ialarmhost.h" />
     <ClInclude Include="..\..\..\..\src\device\camera\cameradefine.h" />
     <ClInclude Include="..\..\..\..\src\device\camera\dahua\dhcamera.h" />
     <ClInclude Include="..\..\..\..\src\device\camera\hikvision\hkcamera.h" />
     <ClInclude Include="..\..\..\..\src\device\camera\icamera.h" />
     <ClInclude Include="..\..\..\..\src\device\devicefactory.h" />
+    <ClInclude Include="..\..\..\..\src\device\idevice.h" />
     <ClInclude Include="..\..\..\..\src\device\intercom\iintercom.h" />
     <ClInclude Include="..\..\..\..\src\device\intercom\intercomdefine.h" />
     <ClInclude Include="..\..\..\..\src\device\intercom\oeasyintercom\oeasyintercom.h" />
     <ClInclude Include="..\..\..\..\src\platform\BaseType.h" />
+    <ClInclude Include="..\..\..\..\src\platform\thread\AutoLock.h" />
+    <ClInclude Include="..\..\..\..\src\platform\thread\MsgThread.hpp" />
+    <ClInclude Include="..\..\..\..\src\platform\thread\Thread.h" />
     <ClInclude Include="..\..\..\..\src\tools\log\log4cpp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\common\ApiImpl.cpp" />
+    <ClCompile Include="..\..\..\..\src\common\HandleManager.cpp" />
+    <ClCompile Include="..\..\..\..\src\device\alarmhost\hikvision\hkalarmhost.cpp" />
     <ClCompile Include="..\..\..\..\src\device\camera\dahua\dhcamera.cpp" />
     <ClCompile Include="..\..\..\..\src\device\camera\hikvision\hkcamera.cpp" />
     <ClCompile Include="..\..\..\..\src\device\devicefactory.cpp" />
     <ClCompile Include="..\..\..\..\src\device\intercom\oeasyintercom\oeasyintercom.cpp" />
     <ClCompile Include="..\..\..\..\src\OeasyMidSdk.cpp" />
+    <ClCompile Include="..\..\..\..\src\platform\thread\AutoLock.cpp" />
+    <ClCompile Include="..\..\..\..\src\platform\thread\Thread.cpp" />
     <ClCompile Include="..\..\..\..\src\tools\log\log4cpp.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

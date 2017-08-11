@@ -1,9 +1,9 @@
 #include "dhcamera.h"
 using namespace OeasyMid_DH;
 
-CAMERATYPE DHCamera::getCameraType()
+_CAMERATYPE DHCamera::getCameraType()
 {
-	return DAHUA;
+	return _DAHUA_IPC;
 }
 
 

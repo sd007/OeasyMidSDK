@@ -1,10 +1,9 @@
+#ifndef __OEASYMIDSDK_PLATFORM_BASETYPE__
+#define __OEASYMIDSDK_PLATFORM_BASETYPE__
 
-#ifndef __OEASYMIDSDK_PLATFORM_BASEDATATYPE__
-#define __OEASYMIDSDK_PLATFORM_BASEDATATYPE__
-
-#ifdef _WIN32
-#define WIN32_LEAN_AND_MEAN
-#endif
+//#ifdef _WIN32
+//#define WIN32_LEAN_AND_MEAN
+//#endif
 
 #ifdef _WIN32
 #include <windows.h>
@@ -48,7 +47,7 @@
 
 #endif
 
-namespace FosSdk
+namespace OeasyMid
 {
 	/*基本类型*/
 	typedef unsigned char           OEASY_U8;
@@ -177,12 +176,12 @@ namespace FosSdk
 #define SOCK_SELECT(nfds, readfds, writefds, exceptfds, timeout)	::select(nfds, readfds, writefds, exceptfds, timeout)
 #define SOCK_SETOPT(s, level, optname, optval, optlen)	::setsockopt(s, level, optname, optval, optlen)
 #define SOCK_GETOPT(s, level, optname, optval, optlen)	::getsockopt(s, level, optname, optval, optlen)
-#define HTONL(hostlong)		::htonl(hostlong)
-#define NTOHL(hostlong)		::ntohl(netlong)
-#define HTONS(hostshort)	::htons(hostshort)
-#define NTOHS(hostshort)	::ntohs(netshort)
-#define INET_ADDR(cp)		inet_addr(cp)
-#define INADDR_NONE			INADDR_NONE
+#define OEASY_HTONL(hostlong)		::htonl(hostlong)
+#define OEASY_NTOHL(hostlong)		::ntohl(netlong)
+#define OEASY_HTONS(hostshort)	::htons(hostshort)
+#define OEASY_NTOHS(hostshort)	::ntohs(netshort)
+#define OEASYLOG_INET_ADDR(cp)		inet_addr(cp)
+#define OEASYLOG_INADDR_NONE			INADDR_NONE
 #else	/* linux or mac */
 #define stricmp strcasecmp
 /*线程相关*/
@@ -233,12 +232,12 @@ namespace FosSdk
 #define SOCK_SELECT(nfds, readfds, writefds, exceptfds, timeout)	::select(nfds, readfds, writefds, exceptfds, timeout)
 #define SOCK_SETOPT(s, level, optname, optval, optlen)	::setsockopt(s, level, optname, optval, optlen)
 #define SOCK_GETOPT(s, level, optname, optval, optlen)	::getsockopt(s, level, optname, optval, optlen)
-#define HTONL(hostlong)		::htonl(hostlong)
-#define NTOHL(hostlong)		::ntohl(netlong)
-#define HTONS(hostshort)	::htons(hostshort)
-#define NTOHS(hostshort)	::ntohs(netshort)
-#define INET_ADDR(cp)		inet_addr(cp)
-#define INADDR_NONE			INADDR_NONE
+#define OEASY_HTONL(hostlong)		::htonl(hostlong)
+#define OEASY_NTOHL(hostlong)		::ntohl(netlong)
+#define OEASY_HTONS(hostshort)	::htons(hostshort)
+#define OEASY_NTOHS(hostshort)	::ntohs(netshort)
+#define OEASYLOG_INET_ADDR(cp)		inet_addr(cp)
+#define OEASYLOG_INADDR_NONE			INADDR_NONE
 #endif
 };
 #endif

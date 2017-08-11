@@ -46,8 +46,8 @@ class Oeasylog {
 
 static Oeasylog &logInstance = Oeasylog::getInstance();
 
-#define OEASY_E(format, ...)		logInstance.Error(FILENAME(__FILE__), __LINE__, format, ##__VA_ARGS__)
-#define OEASY_W(format, ...)		logInstance.Warn(FILENAME(__FILE__), __LINE__, format, ##__VA_ARGS__)
-#define OEASY_I(format, ...)		logInstance.Info(FILENAME(__FILE__), __LINE__, format, ##__VA_ARGS__)
+#define OEASYLOG_E(format, ...)		logInstance.Error(FILENAME(__FILE__), __LINE__, format, ##__VA_ARGS__)
+#define OEASYLOG_W(format, ...)		logInstance.Warn(FILENAME(__FILE__), __LINE__, format, ##__VA_ARGS__)
+#define OEASYLOG_I(format, ...)		logInstance.Info(FILENAME(__FILE__), __LINE__, format, ##__VA_ARGS__)
 
 #endif

@@ -15,23 +15,23 @@ ICamera* DeviceFactory::createCamera( CAMERATYPE cameraType )
 	ICamera *camera = NULL;
 	switch(cameraType)
 	{
-	case HIKVISION:
+	case _HIKVISION_IPC:
 		{
 			HKCamera *hk = new HKCamera();
 			camera = hk;
 		}
 
 		break;
-	case DAHUA:
+	case _DAHUA_IPC:
 		{
-			DHCamera *dh = new DHCamera();
-			camera = dh;
+			//DHCamera *dh = new DHCamera();
+			//camera = dh;
 		}
 	
 		break;
-	case TIANDIWEIYE:
+	case _TIANDY_IPC:
 		break;
-	case OTHERCAMERA:
+	case _OTHER_IPC:
 		break;
 	default:
 		break;
@@ -44,17 +44,62 @@ IItercom* DeviceFactory::CreateInterCom( INTERCOMTYPE intercomType )
 	IItercom *intercom = NULL;
 	switch(intercomType)
 	{
-	case OEASY:
+	case _OEASYLOG_INTERCOM:
 		{
-			OeasyIntercom *oeasy = new OeasyIntercom();
-			intercom = oeasy;
+			//OeasyIntercom *oeasy = new OeasyIntercom();
+			//intercom = oeasy;
 		}
 		break;
-	case OTHERINERCOM:
+	case _OTHER_INERCOM:
 		break;
 	default:
 		break;
 	}
 	return intercom;
+}
+
+IAlarmHost* DeviceFactory::CreateAlarmHost(ALARMHOSTTYPE alarmhostType )
+{
+	IAlarmHost *alarmhost = NULL;
+	switch(alarmhostType)
+	{
+	case _HIKVISION_ALARMHOST:
+		{
+			//HKAlarmHost *hkalarm = new HKAlarmHost();
+			//alarmhost = hkalarm;
+		}
+		break;
+	case _OTHER_ALARMHOST:
+		break;
+	default:
+		break;
+	}
+	return alarmhost;
+}
+
+IDevice* DeviceFactory::createDevice( DEVICETYPE deviceType, int deviceModel )
+{
+	IDevice *device = NULL;
+	switch(deviceType)
+	{
+	case CAMERA:
+		{
+			device = createCamera((CAMERATYPE)deviceModel);
+		}
+		break;
+	case INTERCOM:
+		{
+			device = CreateInterCom((INTERCOMTYPE)deviceModel);
+		}
+		break;
+	case ALARMHOST:
+		{
+			device = CreateAlarmHost((ALARMHOSTTYPE)deviceModel);
+		}
+		break;
+	default:
+		break;
+	}
+	return device;
 }
 
