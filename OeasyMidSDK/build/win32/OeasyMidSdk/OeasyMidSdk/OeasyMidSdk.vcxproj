@@ -37,7 +37,7 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\..\..\include;..\..\..\..\src;..\..\..\..\src\common;..\..\..\..\src\device;..\..\..\..\src\platform;..\..\..\..\src\tools;..\..\..\..\src\device\camera;..\..\..\..\src\device\intercom;..\..\..\..\src\device\camera\dahua;..\..\..\..\src\device\camera\hikvision;..\..\..\..\src\device\intercom\oeasyintercom;..\..\..\..\src\tools\log;..\..\..\..\src\tools\log\include;..\..\..\..\libs\win32\HikVision\include;..\..\..\..\src\device\alarmhost;..\..\..\..\src\device\alarmhost\hikvision;..\..\..\..\src\platform\thread;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\..\..\include;..\..\..\..\src;..\..\..\..\src\common;..\..\..\..\src\device;..\..\..\..\src\platform;..\..\..\..\src\tools;..\..\..\..\src\device\camera;..\..\..\..\src\device\intercom;..\..\..\..\src\device\camera\dahua;..\..\..\..\src\device\camera\hikvision;..\..\..\..\src\device\intercom\oeasyintercom;..\..\..\..\src\tools\log;..\..\..\..\libs\win32\HikVision\include;..\..\..\..\src\device\alarmhost;..\..\..\..\src\device\alarmhost\hikvision;..\..\..\..\src\platform\thread;..\..\..\..\libs\win32\log\include;$(IncludePath)</IncludePath>
     <LibraryPath>..\..\..\..\libs\win32\log\debug;..\..\..\..\libs\win32\HikVision\libs;..\..\..\..\libs\win32\HikVision\libs\HCNetSDKCom;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)</OutDir>
   </PropertyGroup>
