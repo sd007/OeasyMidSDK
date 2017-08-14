@@ -17,8 +17,6 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 	LPVOID lpReserved
 	)
 {
-	OEASYLOG_I("DllMain");
-
 	switch (ul_reason_for_call) {
 	case DLL_PROCESS_ATTACH:
 		{
@@ -52,8 +50,14 @@ OEASY_API void Oeasy_GetOeasyMidVersion( char* version )
 OEASY_API int stdcall Oeasy_InitAll()
 {
 	OEASYLOG_I("Oeasy_InitAll");
+#ifndef _WIN32
+		signal(SIGPIPE, &sigPipe);
+#endif
+
 #ifdef _USE_IPC
 	NET_DVR_Init();
+	//hkÈÕÖ¾
+	NET_DVR_SetLogToFile(3);
 #endif
 	
 	return 0;
@@ -65,16 +69,8 @@ OEASY_API void stdcall Oeasy_DeinitAll()
 	NET_DVR_Cleanup();
 #endif
 	OEASYLOG_I("Oeasy_DeinitAll");
+	CHandleManager::ReleaseInstance();
 	logInstance.destory();
-}
-
-OEASY_API OEASYHANDLE stdcall Oeasy_CreateInstance()
-{
-	OEASYLOG_I("Oeasy_createInstance");
-	OEASYHANDLE handle = OEASY_HANDLE_INVALIDE;
-	CApiImpl* pCore = CHandleManager::CreateApiManager(handle);
-	OEASY_ASSERT (pCore, {}, handle);
-	return handle;
 }
 
 OEASY_API void stdcall Oeasy_ReleaseHandle( OEASYHANDLE handle)
@@ -83,69 +79,98 @@ OEASY_API void stdcall Oeasy_ReleaseHandle( OEASYHANDLE handle)
 	CHandleManager::DeleteApiManager(handle);
 }
 
+OEASY_API OEASYHANDLE stdcall Oeasy_CreateHandle()
+{
+	OEASYLOG_I("Oeasy_CreateHandle");
+	OEASYHANDLE handle = OEASY_HANDLE_INVALIDE;
+	CApiImpl* pCore = CHandleManager::CreateApiManager(handle);
+	OEASY_ASSERT (pCore, {}, handle);
+	return handle;
+}
 
-#ifdef _USE_IPC
 
 OEASY_API int stdcall OeasyMidIPC::Oeasy_IPC_Create(OEASYHANDLE handle, CAMERATYPE cameraType)
 {
+#ifdef _USE_IPC
 	OEASYLOG_I("Oeasy_IPC_Init handle = %d", handle);
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	OEASY_ASSERT (pCore, {}, handle);
-	pCore->IPC_Create(cameraType);
+	return pCore->IPC_Create(cameraType);
+#else
 	return 0;
+#endif
 }
 
 OEASY_API int  stdcall OeasyMidIPC::Oeasy_IPC_Destroy(OEASYHANDLE handle)
 {
+#ifdef _USE_IPC
 	OEASYLOG_I("Oeasy_IPC_Deinit handle = %d", handle);
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	OEASY_ASSERT (pCore, {}, handle);
 	pCore->IPC_Destroy();
 	return 0;
+#else
+	return 0;
+#endif
 }
 
 OEASY_API int stdcall OeasyMidIPC::Oeasy_IPC_Login( OEASYHANDLE handle, OEASY_LOGINFO* loginfo, OEASY_LOGIN_RESULTINFO* resultInfo )
 {
+#ifdef _USE_IPC
 	OEASY_ASSERT(loginfo && resultInfo,,-1)
 	OEASYLOG_I("Oeasy_IPC_Login handle = %d", handle);
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	OEASY_ASSERT (pCore, {}, handle);
-	pCore->IPC_Login(loginfo, resultInfo);
+	return pCore->IPC_Login(loginfo, resultInfo);
+#else
 	return 0;
+#endif
 }
 
 OEASY_API int stdcall OeasyMidIPC::Oeasy_IPC_Logout( OEASYHANDLE handle )
 {
+#ifdef _USE_IPC
 	OEASYLOG_I("Oeasy_IPC_Logout handle = %d", handle);
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	OEASY_ASSERT (pCore, {}, handle);
 	pCore->IPC_LoginOut();
 	return 0;
+#else
+	return 0;
+#endif
 }
 
 OEASY_API IPCLiveHandle stdcall OeasyMidIPC::Oeasy_IPC_StartLive( OEASYHANDLE handle, STREAMTYPE streamtype, bool bstartsms /*= false*/, char* mediaserverurl /*= ""*/ )
 {
+#ifdef _USE_IPC
 	OEASYLOG_I("Oeasy_IPC_StartLive handle = %d", handle);
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	OEASY_ASSERT (pCore, {}, handle);
 	pCore->IPC_StartLive(streamtype, bstartsms, mediaserverurl);
 	return 0;
+#else
+	return 0;
+#endif
 }
 
 OEASY_API int stdcall OeasyMidIPC::Oeasy_IPC_StopLive( OEASYHANDLE handle, IPCLiveHandle livehandle )
 {
+#ifdef _USE_IPC
 	OEASYLOG_I("Oeasy_IPC_StopLive handle = %d ,livehandle = %d", handle, livehandle);
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	OEASY_ASSERT (pCore, {}, handle);
 	pCore->IPC_StopLive(livehandle);
 	return 0;
+#else
+return 0;
+#endif
 }
 
 OEASY_API void stdcall OeasyMidIPC::Oeasy_IPC_SetLiveDataCB( OEASYHANDLE handle, LIVEDATACALLBACK videoDataCB, void *pUser )
 {
+#ifdef _USE_IPC
 	OEASYLOG_I("Oeasy_IPC_SetLiveDataCB handle = %d", handle);
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	pCore->IPC_SetLiveDataCB(videoDataCB,pUser);
-}
-
 #endif
+}

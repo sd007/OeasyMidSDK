@@ -12,8 +12,8 @@ public:
 	virtual CameraId loginCamera(_OEASY_LOGINFO loginfo, _OEASY_LOGIN_RESULTINFO resultInfo) = 0;
 	virtual OEASY_S32 logoutCamera() = 0;
 
-	virtual LiveplayHandle openVideo(_STREAMTYPE streamtype, OEASY_BOOL bstartsms = OEASY_FALSE, OEASY_CHAR* mediaserverurl = "") = 0;
-	virtual OEASY_BOOL closeVideo(LiveplayHandle handle) = 0;
+	virtual LiveplayId openVideo(_STREAMTYPE streamtype, OEASY_BOOL bstartsms = OEASY_FALSE, OEASY_CHAR* mediaserverurl = "") = 0;
+	virtual OEASY_BOOL closeVideo(LiveplayId handle) = 0;
 
 	virtual void setLiveDataCB( LIVEDATACALLBACK videoDataCB, void *pUser ) = 0;
 	//unuse method for Camera

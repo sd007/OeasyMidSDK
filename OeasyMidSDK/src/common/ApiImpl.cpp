@@ -138,7 +138,7 @@ OEASY_S32 CApiImpl::IPC_Login( OEASY_LOGINFO* loginfo, OEASY_LOGIN_RESULTINFO* r
 		return -1;
 	}
 	OEASYLOG_I("IPC_Login success, handle = %d", camerahandle);
-	return 0;
+	return camerahandle;
 }
 
 DEVICETYPE CApiImpl::getDeviceType()

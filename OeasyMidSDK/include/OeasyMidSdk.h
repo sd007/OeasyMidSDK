@@ -21,6 +21,7 @@ using namespace std;
 
 #else
 #define stdcall
+#define CALLBACK  // __cdecl和__stdcall有差异，windows下会有问题
 #endif
 
 
@@ -41,7 +42,6 @@ OEASY_API OEASYHANDLE stdcall Oeasy_CreateHandle();
 OEASY_API void stdcall Oeasy_ReleaseHandle(OEASYHANDLE handle);
 
 namespace OeasyMidIPC{
-#ifdef _USE_IPC
 
 #define IPCLiveHandle long
 
@@ -63,23 +63,16 @@ OEASY_API IPCLiveHandle stdcall Oeasy_IPC_StartLive(OEASYHANDLE handle, STREAMTY
 
 OEASY_API int stdcall Oeasy_IPC_StopLive(OEASYHANDLE handle, IPCLiveHandle livehandle);
 
-
-
-#endif
 }
 
 namespace OeasyMidIntercom{
-#ifdef _USE_INTERCOM
 
-#endif
 
 }
 
 namespace OeasyMidAlarmHost{
 
-#ifdef _USE_ALARMHOST
 
-#endif
 }
 
 #ifdef __cplusplus

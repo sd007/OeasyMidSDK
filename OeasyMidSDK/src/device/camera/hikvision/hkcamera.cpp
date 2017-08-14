@@ -6,7 +6,7 @@ using namespace OeasyMid_HK;
 
 HKCamera::HKCamera()
 	:m_cameraID(-1),
-	m_liveplayHandle(-1),
+	m_liveplayID(-1),
 	m_bmainstartSMS(OEASY_FALSE),
 	m_bsubstartSMS(OEASY_FALSE)
 {
@@ -31,17 +31,24 @@ void HKCamera::exceptionCB( DWORD dwType, LONG lUserID, LONG lHandle, void *pUse
 	}
 }
 
-void HKCamera::videoDataCallback( LONG lPlayHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize, void* pUser )
+void CALLBACK HKCamera::realDataCallback( LONG lPlayHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize, void* pUser )
 {
+	OEASY_ASSERT(pUser,,)
 	HKCamera *currentCamera = (HKCamera*)pUser;
 	switch (dwDataType)
 	{
-	case NET_DVR_SYSHEAD:
+	case NET_DVR_SYSHEAD: //系统头数据
 		break;
-	case NET_DVR_STREAMDATA:
+	case NET_DVR_STREAMDATA: //流数据（包括复合流或音视频分开的视频流数据）
 		if (dwBufSize > 0)
 		{
-			(*currentCamera->m_liveDataCB)((long)lPlayHandle, (unsigned char*)pBuffer, (unsigned long)dwBufSize, currentCamera->m_pUserData);
+			if (currentCamera->m_bmainstartSMS)  //推主码流
+			{
+			}else if(currentCamera->m_bsubstartSMS){ //推子码流
+
+			}else if(currentCamera->m_liveDataCB){ //不推流
+				(*currentCamera->m_liveDataCB)((long)lPlayHandle, (unsigned char*)pBuffer, (unsigned long)dwBufSize, currentCamera->m_pUserData);
+			}
 			/*QByteArray *m_frame;
 
 			if (lRealHandle == tmp->m_lRealPlayHandle)
@@ -102,7 +109,6 @@ _CAMERATYPE HKCamera::getCameraType()
 
 CameraId HKCamera::loginCamera( _OEASY_LOGINFO loginfo, _OEASY_LOGIN_RESULTINFO resultInfo )
 {
-	OEASYLOG_I("HKCamera::loginCamera");
 	//设置连接时间与重连时间
 	NET_DVR_SetConnectTime(2000, 1);
 	//登录参数，包括设备地址、登录用户、密码等
@@ -129,7 +135,7 @@ CameraId HKCamera::loginCamera( _OEASY_LOGINFO loginfo, _OEASY_LOGIN_RESULTINFO 
 		return m_cameraID;
 	}
 	memcpy(&resultInfo.Deviceinfo, &struDeviceInfoV40.struDeviceV30, sizeof(NET_DVR_DEVICEINFO_V30));
-	NET_DVR_SetExceptionCallBack_V30(0, NULL, (ExceptionCallBack)HKCamera::exceptionCB, this);
+	//NET_DVR_SetExceptionCallBack_V30(0, NULL, (ExceptionCallBack)HKCamera::exceptionCB, this);
 	OEASYLOG_I("HKCamera::loginCamera success, m_cameraID = %d", m_cameraID);
 	return m_cameraID;
 }
@@ -141,10 +147,9 @@ OEASY_S32 HKCamera::logoutCamera()
 	return (OEASY_S32)NET_DVR_Logout(m_cameraID);
 }
 
-LiveplayHandle HKCamera::openVideo(_STREAMTYPE streamtype, OEASY_BOOL bstartsms /*= OEASY_FALSE*/, OEASY_CHAR* mediaserverurl /*= "" */)
+LiveplayId HKCamera::openVideo(_STREAMTYPE streamtype, OEASY_BOOL bstartsms /*= OEASY_FALSE*/, OEASY_CHAR* mediaserverurl /*= "" */)
 {
-	OEASY_ASSERT(m_cameraID,,OEASY_FALSE);
-	OEASYLOG_I("HKCamera::openVideo m_cameraID = %d, streamtype = %d, bstartsms = %d", m_cameraID, streamtype, bstartsms);
+	OEASYLOG_I("HKCamera::openVideo m_cameraID = %d", m_cameraID);
 	//启动预览并设置回调数据流
 	NET_DVR_PREVIEWINFO struPlayInfo;
 	memset(&struPlayInfo, 0, sizeof(struPlayInfo));
@@ -159,15 +164,15 @@ LiveplayHandle HKCamera::openVideo(_STREAMTYPE streamtype, OEASY_BOOL bstartsms 
 	}else if(_SUB_STREAM == streamtype && bstartsms){
 		m_bsubstartSMS = OEASY_TRUE;
 	}
-	m_liveplayHandle = NET_DVR_RealPlay_V40(m_cameraID, &struPlayInfo, (REALDATACALLBACK)HKCamera::videoDataCallback, this);
-	return m_liveplayHandle;
+	m_liveplayID = NET_DVR_RealPlay_V40(m_cameraID, &struPlayInfo, (REALDATACALLBACK)HKCamera::realDataCallback, this);
+
+	return m_liveplayID;
 }
 
-OEASY_BOOL HKCamera::closeVideo(LiveplayHandle livehandle)
+OEASY_BOOL HKCamera::closeVideo(LiveplayId liveid)
 {
-	OEASY_ASSERT(m_cameraID,,OEASY_FALSE);
-	OEASYLOG_I("HKCamera::closeVideo m_cameraID = %d", m_cameraID);
-	return (OEASY_BOOL)NET_DVR_StopRealPlay(livehandle);
+	OEASYLOG_I("HKCamera::openVideo LiveplayId = %d", liveid);
+	return (OEASY_BOOL)NET_DVR_StopRealPlay(liveid);
 }
 
 
