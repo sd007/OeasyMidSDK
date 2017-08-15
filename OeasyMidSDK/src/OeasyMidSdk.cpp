@@ -40,7 +40,7 @@ BOOL APIENTRY DllMain( HANDLE hModule,
 void sigPipe(int sig){}
 #endif
 
-OEASY_API void Oeasy_GetOeasyMidVersion( char* version )
+OEASY_API void stdcall Oeasy_GetOeasyMidVersion( char* version )
 {
 	OEASYLOG_I("Oeasy_getOeasyMidVersion");
 	OEASY_ASSERT(version,,)
