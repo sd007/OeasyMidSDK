@@ -191,8 +191,8 @@ namespace OeasyMid
 #define	THREAD_FUNC_TO			void *(*)(void *)
 #define WAIT_TIMEOUT			0
 #define THREAD_RETURN(x)		return NULL
-#define THREADMETHOD(func, lpParam)	void* func(void* lpParam)
-#define THREADMETHOD_DEC(func, lpParam)	static void* func(void* lpParam)
+#define OEASY_THREADMETHOD(func, lpParam)	void* func(void* lpParam)
+#define OEASY_THREADMETHOD_DEC(func, lpParam)	static void* func(void* lpParam)
 #define SLEEP(t)				usleep(t*1000)
 
 /*À¯œ‡πÿ*/

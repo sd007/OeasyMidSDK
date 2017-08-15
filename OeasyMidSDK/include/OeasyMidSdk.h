@@ -22,6 +22,7 @@ using namespace std;
 #else
 #define stdcall
 #define CALLBACK  // __cdecl和__stdcall有差异，windows下会有问题
+#define OEASY_API
 #endif
 
 
@@ -33,7 +34,7 @@ OEASY_API int stdcall Oeasy_InitAll();
 
 OEASY_API void stdcall Oeasy_DeinitAll();
 
-OEASY_API void Oeasy_GetOeasyMidVersion(char* version);
+OEASY_API void stdcall Oeasy_GetOeasyMidVersion(char* version);
 
 //instance API
 

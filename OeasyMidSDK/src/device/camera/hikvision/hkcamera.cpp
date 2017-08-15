@@ -114,10 +114,10 @@ CameraId HKCamera::loginCamera( _OEASY_LOGINFO loginfo, _OEASY_LOGIN_RESULTINFO 
 	//登录参数，包括设备地址、登录用户、密码等
 	NET_DVR_USER_LOGIN_INFO struLoginInfo = {0};
 	struLoginInfo.bUseAsynLogin = 0; //使用同步登录方式
-	strcpy_s(struLoginInfo.sDeviceAddress, loginfo.deviceAddress); //设备IP地址
+	strcpy(struLoginInfo.sDeviceAddress, loginfo.deviceAddress); //设备IP地址
 	struLoginInfo.wPort = loginfo.devicePort; //设备服务端口
-	strcpy_s(struLoginInfo.sUserName, loginfo.username); //设备登录用户名
-	strcpy_s(struLoginInfo.sPassword, loginfo.password); //设备登录密码
+	strcpy(struLoginInfo.sUserName, loginfo.username); //设备登录用户名
+	strcpy(struLoginInfo.sPassword, loginfo.password); //设备登录密码
 	//设备信息, 输出参数
 	NET_DVR_DEVICEINFO_V40 struDeviceInfoV40 = {0};
 

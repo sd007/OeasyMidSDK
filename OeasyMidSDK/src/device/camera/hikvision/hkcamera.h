@@ -7,6 +7,7 @@
 #include<map>
 #include<string>
 #include "OeasyMidSdk.h"
+#include "HCNetSDK.h"
 using namespace OeasyMidIPC;
 
 using namespace std;

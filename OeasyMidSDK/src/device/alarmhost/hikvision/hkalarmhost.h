@@ -10,7 +10,7 @@ using namespace OeasyMid;
 
 namespace OeasyMid_HK{
 
-	typedef void (CALLBACK* ExceptionCallBack)(DWORD dwType, LONG lUserID, LONG lHandle, void *pUsser);
+//	typedef void (CALLBACK* ExceptionCallBack)(DWORD dwType, LONG lUserID, LONG lHandle, void *pUsser);
 	class HKAlarmHost : public IAlarmHost
 	{
 	public:

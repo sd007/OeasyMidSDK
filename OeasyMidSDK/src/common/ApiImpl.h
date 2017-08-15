@@ -20,7 +20,6 @@ public:
 	CApiImpl(void);
 	~CApiImpl(void);
 	DEVICETYPE getDeviceType();
-#ifdef _USE_IPC
 
 	int IPC_Create(CAMERATYPE type);
 	CAMERATYPE IPC_GetCameraType();
@@ -31,7 +30,6 @@ public:
 	OEASY_DWORD IPC_StartLive(STREAMTYPE streamtype, bool bstartsms = false, char* mediaserverurl = "");
 	OEASY_S32 IPC_StopLive(OEASY_DWORD livehandle);
 
-#endif
 	OEASY_S32 GetEvent(OEASY_CHAR *msg);
 
 
