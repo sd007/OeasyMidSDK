@@ -3,7 +3,25 @@ cmake_minimum_required(VERSION 3.2)
 set(ProjectName OeasyMidSDK)  
 project(${ProjectName})
 
-aux_source_directory(src src_dir)
+
+add_definitions(-D_USE_IPC -D _USE_INTERCOM -D_USE_ALARMHOST)
+
+FILE(GLOB_RECURSE sdk_srcs "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+
+include_directories( "src/common"
+	             "src/device"
+                     "src/device/alarmhost"
+		     "src/device/alarmhost/hikvision"
+                     "src/device/camera"
+		     "src/device/camera/dahua"
+                     "src/device/camera/hikvision"
+		     "src/device/intercom"
+                     "src/device/intercom/oeasyintercom"
+                     "src/platform"
+                     "src/platform/thread"
+                     "src/tools"
+                     "src/tools/log"
+)
 
 set(EXECUTABLE_OUT_PATH ${PROJECT_BINARY_DIR}/bin)
 set(LIBRARY_OUT_PATH ${PROJECT_BINARY_DIR}/lib)
@@ -15,9 +33,13 @@ link_libraries(AudioRender HCCore hcnetsdk hpr PlayCtrl SuperRender )
 link_libraries(analyzedata HCAlarm HCCoreDevCfg HCDisplay HCGeneralCfgMgr HCIndustry HCPlayBack HCPreview HCVoiceTalk iconv2 StreamTransClient SystemTransform)
 link_libraries(log4cpp )
 
-set_target_properties(OeasyMidSDK_static PROPERTIES OUTPUT_NAME "OeasyMidSDK")
-set_target_properties(OeasyMidSDK_static PROPERTIES CLEAN_DIRECT_OUTPUT 1)
-set_target_properties(OeasyMidSDK PROPERTIES CLEAN_DIRECT_OUTPUT 1)
+add_library(OeasyMidSDK SHARED ${sdk_srcs}) 
 
-add_library(OeasyMidSDK SHARED ${src_dir}) 
-add_library(OeasyMidSDK STATIC ${src_dir}) 
+#add_library(OeasyMidSDK STATIC ${sdk_srcs}) 
+#set_target_properties(OeasyMidSDK_static PROPERTIES OUTPUT_NAME "OeasyMidSDK")
+#set_target_properties(OeasyMidSDK_static PROPERTIES CLEAN_DIRECT_OUTPUT 1)
+#set_target_properties(OeasyMidSDK PROPERTIES CLEAN_DIRECT_OUTPUT 1)
+
+
+
+
