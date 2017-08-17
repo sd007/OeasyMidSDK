@@ -14,6 +14,7 @@
 #endif
 
 using namespace OeasyMidIPC;
+using namespace OeasyMidIntercom;
 using namespace std;
 
 void videoDataCallBack(long lPlayHandle,  unsigned char *pBuffer, unsigned long bufferSize, void *pUSer)
@@ -29,7 +30,7 @@ int main()
 	cout<<"version == "<<version<<endl;
 	OEASYHANDLE handle = Oeasy_CreateHandle();
 
-
+	/*
 	int ret2 = Oeasy_IPC_Create(handle, HIKVISION_IPC);
         cout<<"create ret = "<<ret2<<endl;
 	OEASY_LOGINFO loginfo;
@@ -57,6 +58,17 @@ int main()
 		Oeasy_IPC_Logout(handle);
 	}
 	Oeasy_IPC_Destroy(handle);
+	*/
+
+	Oeasy_Intercom_Create(handle, OEASY_INTERCOM);
+
+	Oeasy_Intercom_startServer(handle, 12308);
+	while (1)
+	{
+		SLEEP(2000);
+	}
+	Oeasy_Intercom_stopServer(handle);
+	Oeasy_Intercom_Destroy(handle);
 
 	Oeasy_ReleaseHandle(handle);
 	Oeasy_DeinitAll();

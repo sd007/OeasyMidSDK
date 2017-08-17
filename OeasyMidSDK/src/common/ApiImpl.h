@@ -20,7 +20,7 @@ public:
 	CApiImpl(void);
 	~CApiImpl(void);
 	DEVICETYPE getDeviceType();
-
+	//ipc
 	int IPC_Create(CAMERATYPE type);
 	CAMERATYPE IPC_GetCameraType();
 	void IPC_Destroy();
@@ -29,9 +29,15 @@ public:
 	void IPC_SetLiveDataCB(LIVEDATACALLBACK videoDataCB, void *pUser );
 	OEASY_DWORD IPC_StartLive(STREAMTYPE streamtype, bool bstartsms = false, char* mediaserverurl = "");
 	OEASY_S32 IPC_StopLive(OEASY_DWORD livehandle);
+	OEASY_S32 IPC_CaptureImage(OEASY_CHAR *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned);
 
 	OEASY_S32 GetEvent(OEASY_CHAR *msg);
 
+	//intercom
+	int Intercom_Create(INTERCOMTYPE type);
+	void Intercom_Destroy();
+	void Intercom_startServer(OEASY_U16 serverport);
+	void Intercom_stopServer();
 
 protected:
 	OEASY_U32 Ref();

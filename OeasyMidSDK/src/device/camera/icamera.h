@@ -16,9 +16,12 @@ public:
 	virtual OEASY_BOOL closeVideo(LiveplayId handle) = 0;
 
 	virtual void setLiveDataCB( LIVEDATACALLBACK videoDataCB, void *pUser ) = 0;
+	virtual OEASY_S32 captureImage( OEASY_CHAR *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned ) = 0;
+
 	//unuse method for Camera
 	virtual OEASY_BOOL release(){return OEASY_TRUE;}
-
+	virtual void Intercom_startServer( OEASY_U16 serverport ){}
+	virtual void Intercom_stopServer(){}
 };
 
 #endif //ICAMERA_H

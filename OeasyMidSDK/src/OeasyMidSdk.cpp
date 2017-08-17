@@ -57,7 +57,7 @@ OEASY_API int stdcall Oeasy_InitAll()
 #ifdef _USE_IPC
 	NET_DVR_Init();
 	//hkÈÕÖ¾
-	NET_DVR_SetLogToFile(3);
+	NET_DVR_SetLogToFile(0);
 #endif
 	
 	return 0;
@@ -171,6 +171,52 @@ OEASY_API void stdcall OeasyMidIPC::Oeasy_IPC_SetLiveDataCB( OEASYHANDLE handle,
 #ifdef _USE_IPC
 	OEASYLOG_I("Oeasy_IPC_SetLiveDataCB handle = %d", handle);
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
-	pCore->IPC_SetLiveDataCB(videoDataCB,pUser);
+	pCore->IPC_SetLiveDataCB(videoDataCB, pUser);
+#endif
+}
+
+OEASY_API int stdcall OeasyMidIPC::Oeasy_IPC_CaptureImage( OEASYHANDLE handle, char *picBuffer, unsigned long bufferSize, unsigned long* sizeReturned )
+{
+#ifdef _USE_IPC
+	OEASYLOG_I("Oeasy_IPC_CaptureImage handle = %d", handle);
+	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
+	return pCore->IPC_CaptureImage(picBuffer, bufferSize, sizeReturned);
+#endif
+}
+
+OEASY_API void stdcall OeasyMidIntercom::Oeasy_Intercom_startServer( OEASYHANDLE handle, unsigned short serverPort )
+{
+#ifdef _USE_INTERCOM
+	OEASYLOG_I("Oeasy_Intercom_startServer = %d, serverport = %d", handle, serverPort);
+	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
+	pCore->Intercom_startServer(serverPort);
+#endif
+
+}
+
+OEASY_API void stdcall OeasyMidIntercom::Oeasy_Intercom_stopServer( OEASYHANDLE handle )
+{
+#ifdef _USE_INTERCOM
+	OEASYLOG_I("Oeasy_Intercom_stopServer = %d", handle);
+	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
+	pCore->Intercom_stopServer();
+#endif
+}
+
+OEASY_API int stdcall OeasyMidIntercom::Oeasy_Intercom_Create( OEASYHANDLE handle, INTERCOMTYPE type )
+{
+#ifdef _USE_INTERCOM
+	OEASYLOG_I("Oeasy_Intercom_Create = %d", handle);
+	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
+	return pCore->Intercom_Create(type);
+#endif
+}
+
+OEASY_API void stdcall OeasyMidIntercom::Oeasy_Intercom_Destroy( OEASYHANDLE handle )
+{
+#ifdef _USE_INTERCOM
+	OEASYLOG_I("Oeasy_Intercom_Destroy = %d", handle);
+	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
+	pCore->Intercom_Destroy();
 #endif
 }

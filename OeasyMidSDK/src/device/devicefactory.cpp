@@ -46,8 +46,8 @@ IItercom* DeviceFactory::CreateInterCom( INTERCOMTYPE intercomType )
 	{
 	case _OEASYLOG_INTERCOM:
 		{
-			//OeasyIntercom *oeasy = new OeasyIntercom();
-			//intercom = oeasy;
+			OeasyIntercom *oeasy = new OeasyIntercom();
+			intercom = oeasy;
 		}
 		break;
 	case _OTHER_INERCOM:

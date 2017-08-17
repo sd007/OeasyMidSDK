@@ -171,6 +171,39 @@ void CApiImpl::IPC_SetLiveDataCB( LIVEDATACALLBACK videoDataCB, void *pUser )
 	return m_curDevice->setLiveDataCB(videoDataCB, pUser);
 }
 
+OeasyMid::OEASY_S32 CApiImpl::IPC_CaptureImage( OEASY_CHAR *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned )
+{
+	return m_curDevice->captureImage(picBuffer, bufferSize, sizeReturned);
+}
+
+void CApiImpl::Intercom_startServer( OEASY_U16 serverport )
+{
+	m_curDevice->Intercom_startServer(serverport);
+}
+
+void CApiImpl::Intercom_stopServer()
+{
+	m_curDevice->Intercom_stopServer();
+}
+
+int CApiImpl::Intercom_Create( INTERCOMTYPE type )
+{
+	m_deviceType = INTERCOM;
+	m_deviceModel = type;
+
+	m_curDevice = m_deviceFactory->createDevice(m_deviceType, m_deviceModel);
+	if (NULL == m_curDevice)
+	{
+		return -1;
+	}
+	return 0;
+}
+
+void CApiImpl::Intercom_Destroy()
+{
+	OEASY_SAFACE_DELETE(m_curDevice)
+}
+
 
 
 	

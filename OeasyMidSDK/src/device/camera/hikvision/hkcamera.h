@@ -26,6 +26,7 @@ namespace OeasyMid_HK{
 		virtual void setLiveDataCB( LIVEDATACALLBACK videoDataCB, void *pUser );
 		virtual LiveplayId openVideo(_STREAMTYPE streamtype, OEASY_BOOL bstartsms = OEASY_FALSE, OEASY_CHAR* mediaserverurl = "");
 		virtual OEASY_BOOL closeVideo(LiveplayId liveid);
+		virtual OEASY_S32 captureImage( OEASY_CHAR *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned );
 		//callback 
 		static void exceptionCB(DWORD dwType, LONG lUserID, LONG lHandle, void *pUser);
 		static void CALLBACK realDataCallback(LONG lPlayHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize, void* pUser);

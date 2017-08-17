@@ -37,7 +37,7 @@ typedef enum{
 
 //©ийс╤т╫╡
 typedef enum{
-	OEASYLOG_INTERCOM, 
+	OEASY_INTERCOM, 
 	OTHER_INERCOM
 }INTERCOMTYPE;
 

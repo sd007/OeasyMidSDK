@@ -37,8 +37,8 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\..\..\include;..\..\..\..\src;..\..\..\..\src\common;..\..\..\..\src\device;..\..\..\..\src\platform;..\..\..\..\src\tools;..\..\..\..\src\device\camera;..\..\..\..\src\device\intercom;..\..\..\..\src\device\camera\dahua;..\..\..\..\src\device\camera\hikvision;..\..\..\..\src\device\intercom\oeasyintercom;..\..\..\..\src\tools\log;..\..\..\..\libs\win32\HikVision\include;..\..\..\..\src\device\alarmhost;..\..\..\..\src\device\alarmhost\hikvision;..\..\..\..\src\platform\thread;..\..\..\..\libs\win32\log\include;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\..\libs\win32\log\debug;..\..\..\..\libs\win32\HikVision\libs;..\..\..\..\libs\win32\HikVision\libs\HCNetSDKCom;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\include;..\..\..\..\src;..\..\..\..\src\common;..\..\..\..\src\device;..\..\..\..\src\platform;..\..\..\..\src\tools;..\..\..\..\src\device\camera;..\..\..\..\src\device\intercom;..\..\..\..\src\device\camera\dahua;..\..\..\..\src\device\camera\hikvision;..\..\..\..\src\device\intercom\oeasyintercom;..\..\..\..\src\tools\log;..\..\..\..\libs\win32\HikVision\include;..\..\..\..\src\device\alarmhost;..\..\..\..\src\device\alarmhost\hikvision;..\..\..\..\src\platform\thread;..\..\..\..\libs\win32\log\include;..\..\..\..\src\tools\socket;..\..\..\..\src\tools\json;..\..\..\..\libs\win32\jsoncpp\include;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\libs\win32\log\debug;..\..\..\..\libs\win32\HikVision\libs;..\..\..\..\libs\win32\HikVision\libs\HCNetSDKCom;..\..\..\..\libs\win32\jsoncpp\debug;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -46,10 +46,11 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_USE_IPC;_USE_INTERCOM;_USE_ALARMHOST;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>log4cpp.lib;GdiPlus.lib;HCCore.lib;HCNetSDK.lib;PlayCtrl.lib;HCAlarm.lib;HCGeneralCfgMgr.lib;HCPreview.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>log4cpp.lib;GdiPlus.lib;HCCore.lib;HCNetSDK.lib;PlayCtrl.lib;HCAlarm.lib;HCGeneralCfgMgr.lib;HCPreview.lib;json_vc71_libmtd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -86,7 +87,9 @@
     <ClInclude Include="..\..\..\..\src\platform\thread\AutoLock.h" />
     <ClInclude Include="..\..\..\..\src\platform\thread\MsgThread.hpp" />
     <ClInclude Include="..\..\..\..\src\platform\thread\Thread.h" />
+    <ClInclude Include="..\..\..\..\src\tools\json\oeasyjson.h" />
     <ClInclude Include="..\..\..\..\src\tools\log\log4cpp.h" />
+    <ClInclude Include="..\..\..\..\src\tools\socket\OeasySocket.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\common\ApiImpl.cpp" />
@@ -99,7 +102,9 @@
     <ClCompile Include="..\..\..\..\src\OeasyMidSdk.cpp" />
     <ClCompile Include="..\..\..\..\src\platform\thread\AutoLock.cpp" />
     <ClCompile Include="..\..\..\..\src\platform\thread\Thread.cpp" />
+    <ClCompile Include="..\..\..\..\src\tools\json\oeasyjson.cpp" />
     <ClCompile Include="..\..\..\..\src\tools\log\log4cpp.cpp" />
+    <ClCompile Include="..\..\..\..\src\tools\socket\OeasySocket.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

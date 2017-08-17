@@ -11,7 +11,7 @@ namespace OeasyMid{
 		CMsgThread();
 		~CMsgThread();
 	public:
-		OEASY_S32 CreateThread(OEASY_S32 isDetached, OEASY_S32 isScopeInSystem, OEASY_S32 stackSize, THREADFUNC func,OEASY_VOID *context);
+		OEASY_S32 CreateThread(OEASY_S32 isDetached, OEASY_S32 isScopeInSystem, OEASY_S32 stackSize, THREADFUNC func, OEASY_VOID *context);
 		void DeInitThread();
 		OEASY_VOID ExitThead(int timeout, int exitcode);
 		OEASY_VOID ClearMsg();
@@ -86,14 +86,14 @@ namespace OeasyMid{
 		{
 			msg = m_Msg[0];
 			m_Msg.erase(m_Msg.begin());
-			return FOS_TRUE;
+			return OEASY_TRUE;
 		}
-		return FOS_FALSE;
+		return OEASY_FALSE;
 	}
 
 
 	template<typename T, typename V>
-	FOS_VOID CMsgThread<T, V>::PeekEndMsg(T& msg)
+	OEASY_VOID CMsgThread<T, V>::PeekEndMsg(T& msg)
 	{
 		typename V::iterator it;
 		CAutoLock lock(m_Mutex);
