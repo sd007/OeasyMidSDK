@@ -31,7 +31,7 @@ namespace OeasyMid_HK{
 		static void exceptionCB(DWORD dwType, LONG lUserID, LONG lHandle, void *pUser);
 		static void CALLBACK realDataCallback(LONG lPlayHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize, void* pUser);
 
-	public:
+	private:
 		CameraId m_cameraID;
 		LiveplayId m_liveplayID;
 		OEASY_BOOL m_bmainstartSMS; //主码流是否上传到流服务器

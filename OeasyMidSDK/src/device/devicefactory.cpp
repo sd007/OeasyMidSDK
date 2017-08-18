@@ -24,8 +24,8 @@ ICamera* DeviceFactory::createCamera( CAMERATYPE cameraType )
 		break;
 	case _DAHUA_IPC:
 		{
-			//DHCamera *dh = new DHCamera();
-			//camera = dh;
+			DHCamera *dh = new DHCamera();
+			camera = dh;
 		}
 	
 		break;

@@ -4,8 +4,13 @@
 #include "log4cpp.h"
 #include "OeasyMidDefines.h"
 #include "HandleManager.h"
+#include "Tick.h"
 //hikvison
 #include "HCNetSDK.h"
+//dahua
+#include "avglobal.h"
+#include "dhconfigsdk.h"
+#include "dhnetsdk.h"
 
 using namespace std;
 
@@ -53,11 +58,13 @@ OEASY_API int stdcall Oeasy_InitAll()
 #ifndef _WIN32
 		signal(SIGPIPE, &sigPipe);
 #endif
-
+	CTick::GetInstance();
 #ifdef _USE_IPC
+	//hk
 	NET_DVR_Init();
-	//hk»’÷æ
 	NET_DVR_SetLogToFile(0);
+	//dahua
+	CLIENT_Init(NULL, 0);
 #endif
 	
 	return 0;
@@ -65,8 +72,12 @@ OEASY_API int stdcall Oeasy_InitAll()
 
 OEASY_API void stdcall Oeasy_DeinitAll()
 {
+	CTick::ReleaseInstance();
 #ifdef _USE_IPC
+	//hk
 	NET_DVR_Cleanup();
+	//dahua
+	CLIENT_Cleanup();
 #endif
 	OEASYLOG_I("Oeasy_DeinitAll");
 	CHandleManager::ReleaseInstance();
