@@ -46,11 +46,14 @@
     <Filter Include="src\platform\thread">
       <UniqueIdentifier>{cf8668f5-75e7-4287-8a75-a3596e0aafd1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\tools\socket">
-      <UniqueIdentifier>{001a5301-2ae0-43c4-b388-377b8bdbe9a6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\tools\json">
       <UniqueIdentifier>{f1232111-e05c-49ac-88dc-313b9b06e00e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\platform\socket">
+      <UniqueIdentifier>{001a5301-2ae0-43c4-b388-377b8bdbe9a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\platform\tick">
+      <UniqueIdentifier>{9045977b-06ca-4969-b291-7f241dba9b64}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -117,11 +120,14 @@
     <ClInclude Include="..\..\..\..\src\device\idevice.h">
       <Filter>src\device</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\src\tools\socket\OeasySocket.h">
-      <Filter>src\tools\socket</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\src\tools\json\oeasyjson.h">
       <Filter>src\tools\json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\platform\tick\Tick.h">
+      <Filter>src\platform\tick</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\src\platform\socket\OeasySocket.h">
+      <Filter>src\platform\socket</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -158,11 +164,14 @@
     <ClCompile Include="..\..\..\..\src\platform\thread\Thread.cpp">
       <Filter>src\platform\thread</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\tools\socket\OeasySocket.cpp">
-      <Filter>src\tools\socket</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\src\tools\json\oeasyjson.cpp">
       <Filter>src\tools\json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\platform\tick\Tick.cpp">
+      <Filter>src\platform\tick</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\platform\socket\OeasySocket.cpp">
+      <Filter>src\platform\socket</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

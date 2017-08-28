@@ -29,7 +29,7 @@ public:
 	void IPC_SetLiveDataCB(LIVEDATACALLBACK videoDataCB, void *pUser );
 	OEASY_DWORD IPC_StartLive(STREAMTYPE streamtype, bool bstartsms = false, char* mediaserverurl = "");
 	OEASY_S32 IPC_StopLive(OEASY_DWORD livehandle);
-	OEASY_S32 IPC_CaptureImage(OEASY_CHAR *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned);
+	OEASY_S32 IPC_CaptureImage(OEASY_U8 *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned);
 
 	OEASY_S32 GetEvent(OEASY_CHAR *msg);
 

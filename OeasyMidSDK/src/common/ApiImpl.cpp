@@ -171,7 +171,7 @@ void CApiImpl::IPC_SetLiveDataCB( LIVEDATACALLBACK videoDataCB, void *pUser )
 	return m_curDevice->setLiveDataCB(videoDataCB, pUser);
 }
 
-OeasyMid::OEASY_S32 CApiImpl::IPC_CaptureImage( OEASY_CHAR *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned )
+OeasyMid::OEASY_S32 CApiImpl::IPC_CaptureImage( OEASY_U8 *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned )
 {
 	return m_curDevice->captureImage(picBuffer, bufferSize, sizeReturned);
 }

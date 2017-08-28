@@ -186,7 +186,7 @@ OEASY_API void stdcall OeasyMidIPC::Oeasy_IPC_SetLiveDataCB( OEASYHANDLE handle,
 #endif
 }
 
-OEASY_API int stdcall OeasyMidIPC::Oeasy_IPC_CaptureImage( OEASYHANDLE handle, char *picBuffer, unsigned long bufferSize, unsigned long* sizeReturned )
+OEASY_API int stdcall OeasyMidIPC::Oeasy_IPC_CaptureImage( OEASYHANDLE handle, unsigned char *picBuffer, unsigned long bufferSize, unsigned long* sizeReturned )
 {
 #ifdef _USE_IPC
 	OEASYLOG_I("Oeasy_IPC_CaptureImage handle = %d", handle);

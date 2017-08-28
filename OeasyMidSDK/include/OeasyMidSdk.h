@@ -64,7 +64,7 @@ OEASY_API IPCLiveHandle stdcall Oeasy_IPC_StartLive(OEASYHANDLE handle, STREAMTY
 
 OEASY_API int stdcall Oeasy_IPC_StopLive(OEASYHANDLE handle, IPCLiveHandle livehandle);
 
-OEASY_API int stdcall Oeasy_IPC_CaptureImage(OEASYHANDLE handle, char *picBuffer, unsigned long bufferSize,  unsigned long* sizeReturned);
+OEASY_API int stdcall Oeasy_IPC_CaptureImage(OEASYHANDLE handle, unsigned char *picBuffer, unsigned long bufferSize,  unsigned long* sizeReturned);
 }
 
 namespace OeasyMidIntercom{

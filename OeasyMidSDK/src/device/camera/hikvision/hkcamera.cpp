@@ -182,11 +182,11 @@ void OeasyMid_HK::HKCamera::setLiveDataCB( LIVEDATACALLBACK videoDataCB, void *p
 	m_pUserData = pUser;
 }
 
-OeasyMid::OEASY_S32 OeasyMid_HK::HKCamera::captureImage( OEASY_CHAR *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned )
+OeasyMid::OEASY_S32 OeasyMid_HK::HKCamera::captureImage( OEASY_U8 *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned )
 {
 	NET_DVR_JPEGPARA jpegPara;
 	jpegPara.wPicSize=0xff;
 	jpegPara.wPicQuality=1;
-	BOOL ret = NET_DVR_CaptureJPEGPicture_NEW(m_cameraID,  1, &jpegPara, picBuffer, bufferSize, sizeReturned);
+	BOOL ret = NET_DVR_CaptureJPEGPicture_NEW(m_cameraID,  1, &jpegPara, (char*)picBuffer, bufferSize, sizeReturned);
 	return ret;
 }
