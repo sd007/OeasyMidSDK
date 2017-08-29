@@ -55,6 +55,24 @@ typedef struct{
 }_OEASY_LOGIN_RESULTINFO,*_LPOEASY_LOGIN_RESULTINFO;
 
 
+typedef enum{
+	_NO_ALARM,
+	_MOVEDETECT_ALARM,
+	_FACEDETECT_ALARM,
+	_ALL_ALARM
+}_ALARMTYPE;
+
+typedef struct{
+	_ALARMTYPE type; 
+	union{
+
+	};
+	union{
+
+	};
+
+}_ALARMSETTING,*_PALARMSETTING;
+
  #pragma pack(pop) 
 
 #endif //CAMERADEFINE_H

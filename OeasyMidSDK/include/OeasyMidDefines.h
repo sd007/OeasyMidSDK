@@ -56,6 +56,24 @@ typedef enum{
 	OTHERDEVICE
 }DEVICETYPE;
 
+typedef enum{
+	NO_ALARM,
+	MOVEDETECT_ALARM,
+	FACEDETECT_ALARM,
+	ALL_ALARM
+}ALARMTYPE;
+
+typedef struct{
+	ALARMTYPE type; 
+	union{
+
+	};
+	union{
+
+	};
+
+}ALARMSETTING,*PALARMSETTING;
+
 typedef struct tagEventMsg
 {
 	DEVICETYPE  deviceType;

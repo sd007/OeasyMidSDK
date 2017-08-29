@@ -49,6 +49,8 @@ namespace OeasyMidIPC{
 //callback
 typedef void (*LIVEDATACALLBACK) (long lPlayHandle,  unsigned char *pBuffer, unsigned long bufferSize, void *pUSer);
 
+typedef void (*ALARMMESGCALLBACK)(ALARMTYPE alarmType, long lLoginID, char *msgBuf, unsigned long msgBufLen, char *deviceIP, long devicePort, void *pUSer);
+
 //api
 OEASY_API int stdcall Oeasy_IPC_Create(OEASYHANDLE handle, CAMERATYPE cameraType);
 
@@ -58,13 +60,19 @@ OEASY_API int stdcall Oeasy_IPC_Login(OEASYHANDLE handle, OEASY_LOGINFO* loginfo
 
 OEASY_API int stdcall Oeasy_IPC_Logout(OEASYHANDLE handle);
 
-OEASY_API void stdcall Oeasy_IPC_SetLiveDataCB(OEASYHANDLE handle, LIVEDATACALLBACK videoDataCB, void *pUser);
+OEASY_API int stdcall Oeasy_IPC_SetLiveDataCB(OEASYHANDLE handle, LIVEDATACALLBACK videoDataCB, void *pUser);
 
 OEASY_API IPCLiveHandle stdcall Oeasy_IPC_StartLive(OEASYHANDLE handle, STREAMTYPE streamtype, bool bstartsms = false, char* mediaserverurl = "");
 
 OEASY_API int stdcall Oeasy_IPC_StopLive(OEASYHANDLE handle, IPCLiveHandle livehandle);
 
 OEASY_API int stdcall Oeasy_IPC_CaptureImage(OEASYHANDLE handle, unsigned char *picBuffer, unsigned long bufferSize,  unsigned long* sizeReturned);
+
+OEASY_API int stdcall Oeasy_IPC_SetAlarmParam(OEASYHANDLE handle, ALARMSETTING *param);
+
+OEASY_API int stdcall Oeasy_IPC_StartAlarm(OEASYHANDLE handle, ALARMMESGCALLBACK alarmMsgCB, void *pUser);
+
+OEASY_API int stdcall Oeasy_IPC_StopAlarm(OEASYHANDLE handle);
 }
 
 namespace OeasyMidIntercom{

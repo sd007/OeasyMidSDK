@@ -1,6 +1,7 @@
 #include "dhcamera.h"
 #include "log4cpp.h"
 #include "Tick.h"
+#include "OeasyMidDefines.h"
 using namespace OeasyMid_DH;
 
 #define  SNAPBUFFER_SZIE 2*1024*1024
@@ -71,6 +72,35 @@ void CALLBACK OeasyMid_DH::DHCamera::realDataCallback( LLONG lRealHandle, DWORD 
 			break;
 		case 4: //原始音频数据
 			break;
+	}
+}
+
+void CALLBACK OeasyMid_DH::DHCamera::MsgCallBack( LONG lCommand, LLONG lLoginID, char *pBuf, DWORD dwBufLen, char *pchDVRIP, LONG nDVRPort, LDWORD dwUser )
+{
+	DHCamera *curCamera = (DHCamera*)dwUser;
+	if (curCamera == NULL)
+	{
+		OEASYLOG_E("DHCamera::MsgCallBack error!");
+		return;
+	}
+	switch(lCommand)
+	{
+	case DH_ALARM_ALARM_EX:			//0x2101	//External alarm 
+		{
+			//(*curCamera->m_alarmMsgCB)((ALARMTYPE)_FACEDETECT_ALARM, lLoginID, pBuf, (unsigned long)dwBufLen, pchDVRIP,nDVRPort, curCamera->m_pAlarmUserData);
+		}
+		break;
+	case DH_MOTION_ALARM_EX:		//	0x2102	//Motion detection alarm 
+		{
+ 			(*curCamera->m_alarmMsgCB)((ALARMTYPE)_MOVEDETECT_ALARM, lLoginID, pBuf, (unsigned long)dwBufLen, pchDVRIP,nDVRPort, curCamera->m_pAlarmUserData);
+		}
+		break;
+	case DH_VIDEOLOST_ALARM_EX:		//0x2103	//Video loss alarm 
+	case DH_SHELTER_ALARM_EX:		//	0x2104	//Camera masking alarm 
+	case DH_SOUND_DETECT_ALARM_EX:	//0x2105	//Audio detection alarm 
+		break;
+	default:
+		break;
 	}
 }
 
@@ -198,4 +228,26 @@ OeasyMid::OEASY_S32 OeasyMid_DH::DHCamera::captureImage( OEASY_U8*picBuffer, OEA
 	m_snapSize = -1;
 	return 1;
 }
+
+OeasyMid::OEASY_S32 OeasyMid_DH::DHCamera::setAlarmParam( _ALARMSETTING *param )
+{
+	return 0;
+}
+
+OeasyMid::OEASY_S32 OeasyMid_DH::DHCamera::startAlarm( ALARMMESGCALLBACK alarmMsgCB, void *pUser )
+{
+
+	m_alarmMsgCB = alarmMsgCB;
+	m_pAlarmUserData = pUser;
+	CLIENT_StartListenEx(m_cameraID);
+	CLIENT_SetDVRMessCallBack((fMessCallBack)MsgCallBack ,LDWORD(this));
+	return 0;
+}
+
+OeasyMid::OEASY_S32 OeasyMid_DH::DHCamera::stopAlarm()
+{
+	CLIENT_StopListen(m_cameraID);
+	return 0;
+}
+
 

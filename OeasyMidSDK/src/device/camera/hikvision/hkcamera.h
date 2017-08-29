@@ -27,9 +27,16 @@ namespace OeasyMid_HK{
 		virtual LiveplayId openVideo(_STREAMTYPE streamtype, OEASY_BOOL bstartsms = OEASY_FALSE, OEASY_CHAR* mediaserverurl = "");
 		virtual OEASY_BOOL closeVideo(LiveplayId liveid);
 		virtual OEASY_S32 captureImage( OEASY_U8 *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned );
+
+		virtual OEASY_S32 setAlarmParam( _ALARMSETTING *param );
+		virtual OEASY_S32 startAlarm(ALARMMESGCALLBACK alarmMsgCB, void *pUser);
+		virtual OEASY_S32 stopAlarm();
+
 		//callback 
 		static void exceptionCB(DWORD dwType, LONG lUserID, LONG lHandle, void *pUser);
 		static void CALLBACK realDataCallback(LONG lPlayHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize, void* pUser);
+		//alarm
+		static BOOL CALLBACK MsgCallBack(LONG lCommand, NET_DVR_ALARMER *pAlarmer, char *pAlarmInfo, DWORD dwBufLen, void* pUser);
 
 	private:
 		CameraId m_cameraID;
@@ -38,6 +45,8 @@ namespace OeasyMid_HK{
 		OEASY_BOOL m_bsubstartSMS; //子码流是否上传到流服务器
 		LIVEDATACALLBACK m_liveDataCB;
 		void *m_pUserData; 
+		ALARMMESGCALLBACK m_alarmMsgCB;
+		void *m_pAlarmUserData;
 	};
 }
 

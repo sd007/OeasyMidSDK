@@ -17,6 +17,9 @@ public:
 
 	virtual void setLiveDataCB( LIVEDATACALLBACK videoDataCB, void *pUser ) = 0;
 	virtual OEASY_S32 captureImage( OEASY_U8 *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned ) = 0;
+	virtual OEASY_S32 setAlarmParam( _ALARMSETTING *param ) = 0;
+	virtual OEASY_S32 startAlarm(ALARMMESGCALLBACK alarmMsgCB, void *pUser) = 0;
+	virtual OEASY_S32 stopAlarm() = 0;
 
 	//unuse method for Camera
 	virtual OEASY_BOOL release(){return OEASY_TRUE;}

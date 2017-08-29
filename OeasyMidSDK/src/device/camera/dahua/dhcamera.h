@@ -29,9 +29,15 @@ namespace OeasyMid_DH{
 		virtual LiveplayId openVideo(_STREAMTYPE streamtype, OEASY_BOOL bstartsms = OEASY_FALSE, OEASY_CHAR* mediaserverurl = "");
 		virtual OEASY_BOOL closeVideo(LiveplayId liveid);
 		virtual OEASY_S32 captureImage( OEASY_U8 *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned );
+
+		virtual OEASY_S32 setAlarmParam( _ALARMSETTING *param );
+		virtual OEASY_S32 startAlarm(ALARMMESGCALLBACK alarmMsgCB, void *pUser);
+		virtual OEASY_S32 stopAlarm();
 		//callback 
 		static void CALLBACK realDataCallback(LLONG  lRealHandle, DWORD  dwDataType, BYTE  *pBuffer, DWORD  dwBufSize,LONG param, LDWORD dwUser);
 		static void CALLBACK SnapDataRev(LLONG  lLoginID,BYTE *pBuf,UINT RevLen,UINT EncodeType, DWORD CmdSerial, LDWORD dwUser);
+		//alarm
+		static void CALLBACK MsgCallBack(LONG lCommand, LLONG lLoginID, char *pBuf, DWORD dwBufLen, char *pchDVRIP, LONG nDVRPort, LDWORD dwUser);
 	public:
 		OEASY_U32 m_snapCmdSerial;
 		OEASY_U8 *m_snapBuffer;
@@ -44,7 +50,8 @@ namespace OeasyMid_DH{
 		OEASY_BOOL m_bsubstartSMS; //子码流是否上传到流服务器
 		LIVEDATACALLBACK m_liveDataCB;
 		void *m_pUserData; 
-		
+		ALARMMESGCALLBACK m_alarmMsgCB;
+		void *m_pAlarmUserData;
 	};
 }
 

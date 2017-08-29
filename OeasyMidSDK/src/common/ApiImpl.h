@@ -30,9 +30,14 @@ public:
 	OEASY_DWORD IPC_StartLive(STREAMTYPE streamtype, bool bstartsms = false, char* mediaserverurl = "");
 	OEASY_S32 IPC_StopLive(OEASY_DWORD livehandle);
 	OEASY_S32 IPC_CaptureImage(OEASY_U8 *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned);
+	//alarm
+	OEASY_S32 IPC_SetAlarmParam( ALARMSETTING *param );
+	OEASY_S32 IPC_StartAlarm(ALARMMESGCALLBACK alarmMsgCB, void *pUser);
+	OEASY_S32 IPC_StopAlarm();
 
 	OEASY_S32 GetEvent(OEASY_CHAR *msg);
 
+	
 	//intercom
 	int Intercom_Create(INTERCOMTYPE type);
 	void Intercom_Destroy();

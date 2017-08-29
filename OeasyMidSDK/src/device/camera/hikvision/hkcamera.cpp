@@ -190,3 +190,97 @@ OeasyMid::OEASY_S32 OeasyMid_HK::HKCamera::captureImage( OEASY_U8 *picBuffer, OE
 	BOOL ret = NET_DVR_CaptureJPEGPicture_NEW(m_cameraID,  1, &jpegPara, (char*)picBuffer, bufferSize, sizeReturned);
 	return ret;
 }
+
+OeasyMid::OEASY_S32 OeasyMid_HK::HKCamera::setAlarmParam( _ALARMSETTING *param )
+{
+	//≈‰÷√“∆∂Ø’Ï≤‚
+	//NET_DVR_PICCFG_V40 struParams;
+	//memset(&struParams, 0, sizeof(struParams));
+	//BOOL bRet;
+	//DWORD dwReturnLen;
+	//bRet = NET_DVR_GetDVRConfig(m_cameraID, NET_DVR_GET_PICCFG_V40, 1, &struParams, sizeof(NET_DVR_PICCFG_V40), &dwReturnLen);
+	//if (!bRet)
+	//{
+	//	OEASYLOG_E("NET_DVR_PICCFG_V40 error:%ld", NET_DVR_GetLastError());
+	//	return -1;
+	//}
+	////struParams.dwShowChanName = 0;
+	////struParams.dwShowOsd = 0;
+	//struParams.struMotion.byEnableHandleMotion = 1;
+	//struParams.struMotion.byEnableDisplay = 0;
+	//struParams.struMotion.byConfigurationMode = 0;
+	//memset(struParams.struMotion.struMotionMode.struMotionSingleArea.byMotionScope, 0 ,
+	//	sizeof(struParams.struMotion.struMotionMode.struMotionSingleArea.byMotionScope));
+	//for (int i = m_ipcInfo.motionStartY; i < (m_ipcInfo.motionStartY + m_ipcInfo.motionHeight); i++)
+	//{
+	//	for (int j = m_ipcInfo.motionStartX; j < (m_ipcInfo.motionStartX + m_ipcInfo.motionWidth); j++)
+	//	{
+	//		struParams.struMotion.struMotionMode.struMotionSingleArea.byMotionScope[i][j] = 1;
+	//	}
+	//}
+	//struParams.struMotion.struMotionMode.struMotionSingleArea.byMotionSensitive = m_ipcInfo.motionSensitive;
+	//struParams.struMotion.dwHandleType |= 0x04;
+	//bRet = NET_DVR_SetDVRConfig(m_cameraID, NET_DVR_SET_PICCFG_V40, 1, &struParams, sizeof(NET_DVR_PICCFG_V40));
+	return 0;
+}
+
+OeasyMid::OEASY_S32 OeasyMid_HK::HKCamera::startAlarm( ALARMMESGCALLBACK alarmMsgCB, void *pUser )
+{
+	m_alarmMsgCB = alarmMsgCB;
+	m_pAlarmUserData = pUser;
+	NET_DVR_SetDVRMessageCallBack_V31(MSGCallBack_V31(MsgCallBack), this);
+	NET_DVR_SETUPALARM_PARAM struAlarmParam;
+	memset(&struAlarmParam, 0, sizeof(struAlarmParam));
+	struAlarmParam.dwSize = sizeof(struAlarmParam);
+	struAlarmParam.byAlarmInfoType = 0;
+	return NET_DVR_SetupAlarmChan_V41(m_cameraID, &struAlarmParam);
+}
+
+OeasyMid::OEASY_S32 OeasyMid_HK::HKCamera::stopAlarm()
+{
+	return NET_DVR_CloseAlarmChan_V30(m_cameraID);
+}
+
+BOOL CALLBACK OeasyMid_HK::HKCamera::MsgCallBack( LONG lCommand, NET_DVR_ALARMER *pAlarmer, char *pAlarmInfo, DWORD dwBufLen, void* pUser )
+{
+	OEASY_ASSERT(pUser,,0)
+	HKCamera *currentCamera = (HKCamera*)pUser;
+	NET_DVR_ALARMINFO alarmInfo;
+	memcpy(&alarmInfo, pAlarmInfo, sizeof(NET_DVR_ALARMINFO));
+	switch(lCommand)
+	{
+	case COMM_ALARM:
+		{
+			switch(alarmInfo.dwAlarmType)
+			{
+			case 3: //motion detect alarm
+				for (int i =0 ;i < 16; i++)
+				{
+					if (alarmInfo.dwChannel[i] == 1)
+					{
+						(*currentCamera->m_alarmMsgCB)((ALARMTYPE)_MOVEDETECT_ALARM, pAlarmer->lUserID, pAlarmInfo, dwBufLen, pAlarmer->sDeviceIP, 0, currentCamera->m_pAlarmUserData );
+						OEASYLOG_I("move detect from channel %d",i+1);
+					}
+				}
+			}
+		}
+		break;
+	case COMM_ALARM_V30:
+		{
+			switch(alarmInfo.dwAlarmType)
+			{
+			case 3: //motion detect alarm
+			//	for (int i =0 ;i < 16; i++)
+			//	{
+			//		if (alarmInfo.dwChannel[i] == 1)
+			//		{
+						(*currentCamera->m_alarmMsgCB)((ALARMTYPE)_MOVEDETECT_ALARM, pAlarmer->lUserID, pAlarmInfo, dwBufLen, pAlarmer->sDeviceIP, 0, currentCamera->m_pAlarmUserData );
+						 OEASYLOG_I("move detect from ip: %s",pAlarmer->sDeviceIP);
+			//		}
+			//	}
+			}
+		}
+		break;
+	}
+	return 0;
+}

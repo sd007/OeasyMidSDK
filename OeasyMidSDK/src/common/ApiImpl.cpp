@@ -204,6 +204,21 @@ void CApiImpl::Intercom_Destroy()
 	OEASY_SAFACE_DELETE(m_curDevice)
 }
 
+OeasyMid::OEASY_S32 CApiImpl::IPC_SetAlarmParam( ALARMSETTING *param )
+{
+	return m_curDevice->setAlarmParam((_PALARMSETTING)param);
+}
+
+OeasyMid::OEASY_S32 CApiImpl::IPC_StartAlarm( ALARMMESGCALLBACK alarmMsgCB, void *pUser )
+{
+	return m_curDevice->startAlarm(alarmMsgCB, pUser);
+}
+
+OeasyMid::OEASY_S32 CApiImpl::IPC_StopAlarm()
+{
+	return m_curDevice->stopAlarm();
+}
+
 
 
 	

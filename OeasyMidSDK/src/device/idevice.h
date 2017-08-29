@@ -20,6 +20,10 @@ public:
 	virtual LiveplayId openVideo(_STREAMTYPE streamtype, OEASY_BOOL bstartsms = OEASY_FALSE, OEASY_CHAR* mediaserverurl = "") = 0;
 	virtual OEASY_BOOL closeVideo(LiveplayId handle) = 0;
 	virtual OEASY_S32 captureImage( OEASY_U8 *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned ) = 0;
+	virtual OEASY_S32 setAlarmParam( _ALARMSETTING *param ) = 0;
+	virtual OEASY_S32 startAlarm(ALARMMESGCALLBACK alarmMsgCB, void *pUser) = 0;
+	virtual OEASY_S32 stopAlarm() = 0;
+
 	//unused
 	virtual OEASY_BOOL release() = 0;
 	/****************************camera method  end**********************************************/
