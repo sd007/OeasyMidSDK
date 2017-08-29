@@ -254,14 +254,15 @@ BOOL CALLBACK OeasyMid_HK::HKCamera::MsgCallBack( LONG lCommand, NET_DVR_ALARMER
 			switch(alarmInfo.dwAlarmType)
 			{
 			case 3: //motion detect alarm
-				for (int i =0 ;i < 16; i++)
-				{
-					if (alarmInfo.dwChannel[i] == 1)
+				//for (int i =0 ;i < 16; i++)
+				//{
+				//	if (alarmInfo.dwChannel[i] == 1)
+					if(currentCamera->m_alarmMsgCB)
 					{
 						(*currentCamera->m_alarmMsgCB)((ALARMTYPE)_MOVEDETECT_ALARM, pAlarmer->lUserID, pAlarmInfo, dwBufLen, pAlarmer->sDeviceIP, 0, currentCamera->m_pAlarmUserData );
-						OEASYLOG_I("move detect from channel %d",i+1);
+						OEASYLOG_I("move detect from ip: %s",pAlarmer->sDeviceIP);
 					}
-				}
+				//}
 			}
 		}
 		break;
@@ -273,10 +274,11 @@ BOOL CALLBACK OeasyMid_HK::HKCamera::MsgCallBack( LONG lCommand, NET_DVR_ALARMER
 			//	for (int i =0 ;i < 16; i++)
 			//	{
 			//		if (alarmInfo.dwChannel[i] == 1)
-			//		{
+					if(currentCamera->m_alarmMsgCB)
+					{
 						(*currentCamera->m_alarmMsgCB)((ALARMTYPE)_MOVEDETECT_ALARM, pAlarmer->lUserID, pAlarmInfo, dwBufLen, pAlarmer->sDeviceIP, 0, currentCamera->m_pAlarmUserData );
 						 OEASYLOG_I("move detect from ip: %s",pAlarmer->sDeviceIP);
-			//		}
+					}
 			//	}
 			}
 		}

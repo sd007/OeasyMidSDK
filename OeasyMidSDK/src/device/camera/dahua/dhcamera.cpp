@@ -83,6 +83,7 @@ void CALLBACK OeasyMid_DH::DHCamera::MsgCallBack( LONG lCommand, LLONG lLoginID,
 		OEASYLOG_E("DHCamera::MsgCallBack error!");
 		return;
 	}
+	OEASYLOG_E("DHCamera::MsgCallBack command = %d", lCommand);
 	switch(lCommand)
 	{
 	case DH_ALARM_ALARM_EX:			//0x2101	//External alarm 
@@ -92,7 +93,11 @@ void CALLBACK OeasyMid_DH::DHCamera::MsgCallBack( LONG lCommand, LLONG lLoginID,
 		break;
 	case DH_MOTION_ALARM_EX:		//	0x2102	//Motion detection alarm 
 		{
- 			(*curCamera->m_alarmMsgCB)((ALARMTYPE)_MOVEDETECT_ALARM, lLoginID, pBuf, (unsigned long)dwBufLen, pchDVRIP,nDVRPort, curCamera->m_pAlarmUserData);
+			if (curCamera->m_alarmMsgCB)
+			{
+				(*curCamera->m_alarmMsgCB)((ALARMTYPE)_MOVEDETECT_ALARM, lLoginID, pBuf, (unsigned long)dwBufLen, pchDVRIP,nDVRPort, curCamera->m_pAlarmUserData);
+			}
+ 			
 		}
 		break;
 	case DH_VIDEOLOST_ALARM_EX:		//0x2103	//Video loss alarm 

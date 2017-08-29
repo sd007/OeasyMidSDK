@@ -52,14 +52,14 @@ int main()
 	OEASYHANDLE handle = Oeasy_CreateHandle();
 	g_handle = handle;
 	
-	int ret2 = Oeasy_IPC_Create(handle, HIKVISION_IPC);
+	int ret2 = Oeasy_IPC_Create(handle, DAHUA_IPC);
         cout<<"create ret = "<<ret2<<endl;
 	OEASY_LOGINFO loginfo;
 	memset(&loginfo, 0 ,sizeof(OEASY_LOGINFO));
-	loginfo.devicePort = 8000;
-	memcpy(loginfo.deviceAddress,"192.168.1.66", DEVICE_ADDRESS_LEN);
+	loginfo.devicePort = 37777;
+	memcpy(loginfo.deviceAddress,"192.168.1.108", DEVICE_ADDRESS_LEN);
 	memcpy(loginfo.username, "admin", USERNAME_LEN);
-	memcpy(loginfo.password, "oeasy909", PASSWORD_LEN);
+	memcpy(loginfo.password, "oeasy123456", PASSWORD_LEN);
 
 	OEASY_LOGIN_RESULTINFO resultInfo;
 	memset(&resultInfo, 0 ,sizeof(OEASY_LOGIN_RESULTINFO));
