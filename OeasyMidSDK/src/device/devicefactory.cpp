@@ -65,8 +65,8 @@ IAlarmHost* DeviceFactory::CreateAlarmHost(ALARMHOSTTYPE alarmhostType )
 	{
 	case _HIKVISION_ALARMHOST:
 		{
-			//HKAlarmHost *hkalarm = new HKAlarmHost();
-			//alarmhost = hkalarm;
+			HKAlarmHost *hkalarm = new HKAlarmHost();
+			alarmhost = hkalarm;
 		}
 		break;
 	case _OTHER_ALARMHOST:

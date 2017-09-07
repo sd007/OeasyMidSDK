@@ -22,6 +22,7 @@ m_snapCmdSerial(0)
 	m_snapBuffer = (OEASY_U8 *)malloc(SNAPBUFFER_SZIE);
 	m_snapSize = 0;
 	INIT_MUTEX(&m_snapMutex);
+	CLIENT_SetSnapRevCallBack((fSnapRev)SnapDataRev, (LDWORD)this);
 }
 
 OeasyMid_DH::DHCamera::~DHCamera()
@@ -83,9 +84,25 @@ void CALLBACK OeasyMid_DH::DHCamera::MsgCallBack( LONG lCommand, LLONG lLoginID,
 		OEASYLOG_E("DHCamera::MsgCallBack error!");
 		return;
 	}
-	OEASYLOG_E("DHCamera::MsgCallBack command = %d", lCommand);
+	//OEASYLOG_I("DHCamera::MsgCallBack command = %d", lCommand);
 	switch(lCommand)
 	{
+	case DH_EVENT_FACE_DETECTION: //人脸检测事件
+		{
+			if (curCamera->m_alarmMsgCB)
+			{
+				(*curCamera->m_alarmMsgCB)((ALARMTYPE)_FACEDETECT_ALARM, lLoginID, pBuf, (unsigned long)dwBufLen, pchDVRIP,nDVRPort, curCamera->m_pAlarmUserData);
+			}
+		}
+		break;
+	case DH_EVENT_MOTIONDETECT: //移动侦测事件
+		{
+			if (curCamera->m_alarmMsgCB)
+			{
+				(*curCamera->m_alarmMsgCB)((ALARMTYPE)_MOVEDETECT_ALARM, lLoginID, pBuf, (unsigned long)dwBufLen, pchDVRIP,nDVRPort, curCamera->m_pAlarmUserData);
+			}
+		}
+		break;
 	case DH_ALARM_ALARM_EX:			//0x2101	//External alarm 
 		{
 			//(*curCamera->m_alarmMsgCB)((ALARMTYPE)_FACEDETECT_ALARM, lLoginID, pBuf, (unsigned long)dwBufLen, pchDVRIP,nDVRPort, curCamera->m_pAlarmUserData);
@@ -96,8 +113,7 @@ void CALLBACK OeasyMid_DH::DHCamera::MsgCallBack( LONG lCommand, LLONG lLoginID,
 			if (curCamera->m_alarmMsgCB)
 			{
 				(*curCamera->m_alarmMsgCB)((ALARMTYPE)_MOVEDETECT_ALARM, lLoginID, pBuf, (unsigned long)dwBufLen, pchDVRIP,nDVRPort, curCamera->m_pAlarmUserData);
-			}
- 			
+			}		
 		}
 		break;
 	case DH_VIDEOLOST_ALARM_EX:		//0x2103	//Video loss alarm 
@@ -189,11 +205,13 @@ void CALLBACK OeasyMid_DH::DHCamera::SnapDataRev( LLONG lLoginID,BYTE *pBuf,UINT
 	}
 	if (RevLen > 0 )
 	{
+		OEASYLOG_I("DHCamera::SnapDataRev RevLen = %d", RevLen);
 		LOCK_MUTEX(&curCamera->m_snapMutex);
 		if (SNAPBUFFER_SZIE > RevLen)
 		{
 			memcpy(curCamera->m_snapBuffer, pBuf, RevLen);
 			curCamera->m_snapSize = RevLen;
+			OEASYLOG_I("DHCamera::SnapDataRev OK");
 		}
 		UNLOCK_MUTEX(&curCamera->m_snapMutex);
 	}
@@ -203,7 +221,7 @@ void CALLBACK OeasyMid_DH::DHCamera::SnapDataRev( LLONG lLoginID,BYTE *pBuf,UINT
 OeasyMid::OEASY_S32 OeasyMid_DH::DHCamera::captureImage( OEASY_U8*picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned )
 {
 	int timeout = 1000; //10s
-	CLIENT_SetSnapRevCallBack((fSnapRev)SnapDataRev, (LDWORD)this);
+	//CLIENT_SetSnapRevCallBack((fSnapRev)SnapDataRev, (LDWORD)this);
 	OEASY_U64 enterTime = CTick::GetTickCount();
 	SNAP_PARAMS pram;
 	pram.Channel = 0;
@@ -212,6 +230,7 @@ OeasyMid::OEASY_S32 OeasyMid_DH::DHCamera::captureImage( OEASY_U8*picBuffer, OEA
 	m_snapCmdSerial++;
 	pram.CmdSerial = m_snapCmdSerial;
 	BOOL ret = CLIENT_SnapPictureEx(m_cameraID, &pram);
+	OEASYLOG_W("DHCamera::CLIENT_SnapPictureEx ret = %d", ret);
 	while(CTick::GetTickCount() - enterTime < timeout)
 	{
 		if (m_snapSize > 0) //geted image
@@ -230,7 +249,7 @@ OeasyMid::OEASY_S32 OeasyMid_DH::DHCamera::captureImage( OEASY_U8*picBuffer, OEA
 		return -1; //tiemout and no image
 	}
 	memset(m_snapBuffer, 0, SNAPBUFFER_SZIE);
-	m_snapSize = -1;
+	m_snapSize = 0;
 	return 1;
 }
 
