@@ -21,7 +21,7 @@
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
@@ -37,9 +37,13 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>..\..\..\..\include;..\..\..\..\src;..\..\..\..\src\common;..\..\..\..\src\device;..\..\..\..\src\platform;..\..\..\..\src\tools;..\..\..\..\src\device\camera;..\..\..\..\src\device\intercom;..\..\..\..\src\device\camera\dahua;..\..\..\..\src\device\camera\hikvision;..\..\..\..\src\device\intercom\oeasyintercom;..\..\..\..\src\tools\log;..\..\..\..\libs\win32\HikVision\include;..\..\..\..\src\device\alarmhost;..\..\..\..\src\device\alarmhost\hikvision;..\..\..\..\src\platform\thread;..\..\..\..\libs\win32\log\include;..\..\..\..\src\platform\socket;..\..\..\..\src\tools\json;..\..\..\..\libs\win32\jsoncpp\include;..\..\..\..\libs\win32\DaHua\include;..\..\..\..\src\platform\tick;$(IncludePath)</IncludePath>
-    <LibraryPath>..\..\..\..\libs\win32\log\debug;..\..\..\..\libs\win32\HikVision\libs;..\..\..\..\libs\win32\HikVision\libs\HCNetSDKCom;..\..\..\..\libs\win32\jsoncpp\debug;..\..\..\..\libs\win32\DaHua\libs;$(LibraryPath)</LibraryPath>
+    <IncludePath>..\..\..\..\include;..\..\..\..\src;..\..\..\..\src\common;..\..\..\..\src\device;..\..\..\..\src\platform;..\..\..\..\src\tools;..\..\..\..\src\device\camera;..\..\..\..\src\device\intercom;..\..\..\..\src\device\camera\dahua;..\..\..\..\src\device\camera\hikvision;..\..\..\..\src\device\intercom\oeasyintercom;..\..\..\..\libs\win32\HikVision\include;..\..\..\..\src\device\alarmhost;..\..\..\..\src\device\alarmhost\hikvision;..\..\..\..\src\platform\thread;..\..\..\..\libs\win32\log\include;..\..\..\..\src\platform\socket;..\..\..\..\src\tools\json;..\..\..\..\libs\win32\jsoncpp\include;..\..\..\..\libs\win32\DaHua\include;..\..\..\..\src\platform\tick;..\..\..\..\src\tools\log;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\libs\win32\HikVision\libs;..\..\..\..\libs\win32\HikVision\libs\HCNetSDKCom;..\..\..\..\libs\win32\jsoncpp\debug;..\..\..\..\libs\win32\DaHua\libs;..\..\..\..\libs\win32\log\debug;$(LibraryPath)</LibraryPath>
     <OutDir>$(SolutionDir)$(Configuration)</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>..\..\..\..\include;..\..\..\..\src;..\..\..\..\src\common;..\..\..\..\src\device;..\..\..\..\src\platform;..\..\..\..\src\tools;..\..\..\..\src\device\camera;..\..\..\..\src\device\intercom;..\..\..\..\src\device\camera\dahua;..\..\..\..\src\device\camera\hikvision;..\..\..\..\src\device\intercom\oeasyintercom;..\..\..\..\libs\win32\HikVision\include;..\..\..\..\src\device\alarmhost;..\..\..\..\src\device\alarmhost\hikvision;..\..\..\..\src\platform\thread;..\..\..\..\src\platform\socket;..\..\..\..\src\tools\json;..\..\..\..\libs\win32\jsoncpp\include;..\..\..\..\libs\win32\DaHua\include;..\..\..\..\src\platform\tick;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\..\..\libs\win32\HikVision\libs;..\..\..\..\libs\win32\HikVision\libs\HCNetSDKCom;..\..\..\..\libs\win32\jsoncpp\release;..\..\..\..\libs\win32\DaHua\libs;..\..\..\..\libs\win32\log\release;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -50,7 +54,7 @@
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>log4cpp.lib;GdiPlus.lib;HCCore.lib;HCNetSDK.lib;PlayCtrl.lib;HCAlarm.lib;HCGeneralCfgMgr.lib;HCPreview.lib;json_vc71_libmtd.lib;dhconfigsdk.lib;dhnetsdk.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>GdiPlus.lib;HCCore.lib;HCNetSDK.lib;PlayCtrl.lib;HCAlarm.lib;HCGeneralCfgMgr.lib;HCPreview.lib;json_vc71_libmtd.lib;dhconfigsdk.lib;dhnetsdk.lib;log4cppD.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -59,11 +63,14 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>_USE_IPC;_USE_INTERCOM;_USE_ALARMHOST;WIN32_LEAN_AND_MEAN;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalDependencies>GdiPlus.lib;HCCore.lib;HCNetSDK.lib;PlayCtrl.lib;HCAlarm.lib;HCGeneralCfgMgr.lib;HCPreview.lib;dhconfigsdk.lib;dhnetsdk.lib;json_vc71_libmt.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

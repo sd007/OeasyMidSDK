@@ -59,7 +59,7 @@ int main()
 	loginfo.devicePort = 37777;
 	memcpy(loginfo.deviceAddress,"192.168.1.108", DEVICE_ADDRESS_LEN);
 	memcpy(loginfo.username, "admin", USERNAME_LEN);
-	memcpy(loginfo.password, "oeasy123456", PASSWORD_LEN);
+	memcpy(loginfo.password, "oeasy808", PASSWORD_LEN);
 
 	OEASY_LOGIN_RESULTINFO resultInfo;
 	memset(&resultInfo, 0 ,sizeof(OEASY_LOGIN_RESULTINFO));
@@ -70,8 +70,8 @@ int main()
 	{
 		//Oeasy_IPC_SetLiveDataCB(handle, (LIVEDATACALLBACK)videoDataCallBack, NULL);
 
-		IPCLiveHandle livehandle = Oeasy_IPC_StartLive(handle, MAIN_STREAM);
-		cout<<"start live result = "<<livehandle<<endl;
+	//	IPCLiveHandle livehandle = Oeasy_IPC_StartLive(handle, MAIN_STREAM);
+	//	cout<<"start live result = "<<livehandle<<endl;
 		Oeasy_IPC_SetLiveDataCB(handle, (LIVEDATACALLBACK)videoDataCallBack, NULL);
 		int count = 5;
 		while (count--)
@@ -79,14 +79,14 @@ int main()
 			SLEEP(1000);
 		}
 		Oeasy_IPC_StartAlarm(handle, ALARMMESGCALLBACK(AlarmMsg), NULL);
-		count = 1500;
+		count = 5;
 		while (count--)
 		{
 			SLEEP(1000);
 		}
 		Oeasy_IPC_StopAlarm(handle);
 
-		Oeasy_IPC_StopLive(handle, livehandle);
+//		Oeasy_IPC_StopLive(handle, livehandle);
 		Oeasy_IPC_Logout(handle);
 	}
 	Oeasy_IPC_Destroy(handle);

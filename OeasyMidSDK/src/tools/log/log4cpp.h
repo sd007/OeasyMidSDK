@@ -3,11 +3,15 @@
 #define LOG_4_CPP
 
 #include<log4cpp/Category.hh>
+#include<log4cpp/PatternLayout.hh>
+#include<log4cpp/OstreamAppender.hh>
+#include<log4cpp/FileAppender.hh>
+#include<log4cpp/RollingFileAppender.hh>
+#include<log4cpp/Priority.hh>
 #include<iostream>
 #include <string.h> //strrchr()函数所需头文件
 #include <stdio.h>
 #include <stdarg.h>
-
 #define MAX_LOG_RECORD_LEN    2048
 
 //日志优先级
@@ -21,6 +25,7 @@ enum Priority {
 class Oeasylog {
  public: 
     static Oeasylog& getInstance();
+	~Oeasylog();
     void destory();
 	void setLogFilename( const std::string& fileName = "log4cpp.log");
     void setPriority(Priority priority);
@@ -36,6 +41,8 @@ class Oeasylog {
 	log4cpp::Category &m_category_ref;
     static Oeasylog *m_plog;
 	static char m_logBuf[MAX_LOG_RECORD_LEN];
+	log4cpp::OstreamAppender *m_os_appender;
+	log4cpp::FileAppender *m_file_appender;
 };
 
 #ifdef WIN32

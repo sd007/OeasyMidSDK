@@ -62,7 +62,7 @@ OEASY_API int stdcall Oeasy_InitAll()
 #ifdef _USE_IPC
 	//hk
 	NET_DVR_Init();
-	NET_DVR_SetLogToFile(0);
+	//NET_DVR_SetLogToFile(0);
 	//dahua
 	CLIENT_Init(NULL, 0);
 #endif
@@ -71,16 +71,16 @@ OEASY_API int stdcall Oeasy_InitAll()
 }
 
 OEASY_API void stdcall Oeasy_DeinitAll()
-{
-	CTick::ReleaseInstance();
+{	
+	OEASYLOG_I("Oeasy_DeinitAll");
 #ifdef _USE_IPC
 	//hk
 	NET_DVR_Cleanup();
 	//dahua
 	CLIENT_Cleanup();
 #endif
-	OEASYLOG_I("Oeasy_DeinitAll");
 	CHandleManager::ReleaseInstance();
+	CTick::ReleaseInstance();
 	logInstance.destory();
 }
 
@@ -102,14 +102,15 @@ OEASY_API OEASYHANDLE stdcall Oeasy_CreateHandle()
 
 OEASY_API int stdcall OeasyMidIPC::Oeasy_IPC_Create(OEASYHANDLE handle, CAMERATYPE cameraType)
 {
+	int ret  = -1;
 #ifdef _USE_IPC
 	OEASYLOG_I("Oeasy_IPC_Init handle = %d", handle);
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	OEASY_ASSERT (pCore, {}, handle);
-	return pCore->IPC_Create(cameraType);
-#else
-	return 0;
+	ret = pCore->IPC_Create(cameraType);
+	CHandleManager::ReleaseApiManager(handle);
 #endif
+	return ret;
 }
 
 OEASY_API int  stdcall OeasyMidIPC::Oeasy_IPC_Destroy(OEASYHANDLE handle)
@@ -119,20 +120,23 @@ OEASY_API int  stdcall OeasyMidIPC::Oeasy_IPC_Destroy(OEASYHANDLE handle)
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	OEASY_ASSERT (pCore, {}, handle);
 	pCore->IPC_Destroy();
+	CHandleManager::ReleaseApiManager(handle);
 #endif
 	return 0;
 }
 
 OEASY_API int stdcall OeasyMidIPC::Oeasy_IPC_Login( OEASYHANDLE handle, OEASY_LOGINFO* loginfo, OEASY_LOGIN_RESULTINFO* resultInfo )
 {
+	int ret = -1;
 #ifdef _USE_IPC
 	OEASY_ASSERT(loginfo && resultInfo,,-1)
 	OEASYLOG_I("Oeasy_IPC_Login handle = %d", handle);
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	OEASY_ASSERT (pCore, {}, handle);
-	return pCore->IPC_Login(loginfo, resultInfo);
+	ret = pCore->IPC_Login(loginfo, resultInfo);
+	CHandleManager::ReleaseApiManager(handle);
 #endif
-	return 0;
+	return ret;
 
 }
 
@@ -143,6 +147,7 @@ OEASY_API int stdcall OeasyMidIPC::Oeasy_IPC_Logout( OEASYHANDLE handle )
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	OEASY_ASSERT (pCore, {}, handle);
 	pCore->IPC_LoginOut();
+	CHandleManager::ReleaseApiManager(handle);
 #endif
 	return 0;
 
@@ -155,6 +160,7 @@ OEASY_API IPCLiveHandle stdcall OeasyMidIPC::Oeasy_IPC_StartLive( OEASYHANDLE ha
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	OEASY_ASSERT (pCore, {}, handle);
 	pCore->IPC_StartLive(streamtype, bstartsms, mediaserverurl);
+	CHandleManager::ReleaseApiManager(handle);
 	return 0;
 #else
 	return 0;
@@ -168,6 +174,7 @@ OEASY_API int stdcall OeasyMidIPC::Oeasy_IPC_StopLive( OEASYHANDLE handle, IPCLi
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	OEASY_ASSERT (pCore, {}, handle);
 	pCore->IPC_StopLive(livehandle);
+	CHandleManager::ReleaseApiManager(handle);
 	return 0;
 #else
 return 0;
@@ -181,6 +188,7 @@ OEASY_API int stdcall OeasyMidIPC::Oeasy_IPC_SetLiveDataCB( OEASYHANDLE handle, 
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	OEASY_ASSERT (pCore, {}, handle);
 	pCore->IPC_SetLiveDataCB(videoDataCB, pUser);
+	CHandleManager::ReleaseApiManager(handle);
 #endif
 	return 0;
 }
@@ -193,6 +201,7 @@ OEASY_API int stdcall OeasyMidIPC::Oeasy_IPC_CaptureImage( OEASYHANDLE handle, u
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	OEASY_ASSERT (pCore, {}, handle);
 	ret = pCore->IPC_CaptureImage(picBuffer, bufferSize, sizeReturned);
+	CHandleManager::ReleaseApiManager(handle);
 #endif
 	return ret;
 }
@@ -206,6 +215,7 @@ OEASY_API int stdcall OeasyMidIPC::Oeasy_IPC_SetAlarmParam( OEASYHANDLE handle, 
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	OEASY_ASSERT (pCore, {}, handle);
 	ret = pCore->IPC_SetAlarmParam(param);
+	CHandleManager::ReleaseApiManager(handle);
 #endif
 	return ret; 
 }
@@ -218,6 +228,7 @@ OEASY_API int stdcall OeasyMidIPC::Oeasy_IPC_StartAlarm( OEASYHANDLE handle, ALA
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	OEASY_ASSERT (pCore, {}, handle);
 	ret = pCore->IPC_StartAlarm(alarmMsgCB, pUser);
+	CHandleManager::ReleaseApiManager(handle);
 #endif
 	return ret; 
 }
@@ -230,6 +241,7 @@ OEASY_API int stdcall OeasyMidIPC::Oeasy_IPC_StopAlarm( OEASYHANDLE handle )
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	OEASY_ASSERT (pCore, {}, handle);
 	ret = pCore->IPC_StopAlarm();
+	CHandleManager::ReleaseApiManager(handle);
 #endif
 	return ret; 
 }
@@ -240,6 +252,7 @@ OEASY_API void stdcall OeasyMidIntercom::Oeasy_Intercom_startServer( OEASYHANDLE
 	OEASYLOG_I("Oeasy_Intercom_startServer = %d, serverport = %d", handle, serverPort);
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	pCore->Intercom_startServer(serverPort);
+	CHandleManager::ReleaseApiManager(handle);
 #endif
 
 }
@@ -250,6 +263,7 @@ OEASY_API void stdcall OeasyMidIntercom::Oeasy_Intercom_stopServer( OEASYHANDLE 
 	OEASYLOG_I("Oeasy_Intercom_stopServer = %d", handle);
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	pCore->Intercom_stopServer();
+	CHandleManager::ReleaseApiManager(handle);
 #endif
 }
 
@@ -259,6 +273,7 @@ OEASY_API int stdcall OeasyMidIntercom::Oeasy_Intercom_Create( OEASYHANDLE handl
 	OEASYLOG_I("Oeasy_Intercom_Create = %d", handle);
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	return pCore->Intercom_Create(type);
+	CHandleManager::ReleaseApiManager(handle);
 #endif
 }
 
@@ -268,5 +283,6 @@ OEASY_API void stdcall OeasyMidIntercom::Oeasy_Intercom_Destroy( OEASYHANDLE han
 	OEASYLOG_I("Oeasy_Intercom_Destroy = %d", handle);
 	CApiImpl* pCore = CHandleManager::GetApiManager(handle);
 	pCore->Intercom_Destroy();
+	CHandleManager::ReleaseApiManager(handle);
 #endif
 }

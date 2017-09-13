@@ -43,9 +43,6 @@
     <Filter Include="src\device\alarmhost\hikvison">
       <UniqueIdentifier>{fbec7bcd-231d-4768-b397-b77e943b9f20}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\platform\thread">
-      <UniqueIdentifier>{cf8668f5-75e7-4287-8a75-a3596e0aafd1}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\tools\json">
       <UniqueIdentifier>{f1232111-e05c-49ac-88dc-313b9b06e00e}</UniqueIdentifier>
     </Filter>
@@ -54,6 +51,9 @@
     </Filter>
     <Filter Include="src\platform\tick">
       <UniqueIdentifier>{9045977b-06ca-4969-b291-7f241dba9b64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\platform\socket\thread">
+      <UniqueIdentifier>{cf8668f5-75e7-4287-8a75-a3596e0aafd1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -74,9 +74,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\device\intercom\iintercom.h">
       <Filter>src\device\intercom</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\src\tools\log\log4cpp.h">
-      <Filter>src\tools\log</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\platform\BaseType.h">
       <Filter>src\platform</Filter>
@@ -109,13 +106,13 @@
       <Filter>src\common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\platform\thread\AutoLock.h">
-      <Filter>src\platform\thread</Filter>
+      <Filter>src\platform\socket\thread</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\platform\thread\MsgThread.hpp">
-      <Filter>src\platform\thread</Filter>
+      <Filter>src\platform\socket\thread</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\platform\thread\Thread.h">
-      <Filter>src\platform\thread</Filter>
+      <Filter>src\platform\socket\thread</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\src\device\idevice.h">
       <Filter>src\device</Filter>
@@ -129,6 +126,9 @@
     <ClInclude Include="..\..\..\..\src\platform\socket\OeasySocket.h">
       <Filter>src\platform\socket</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\src\tools\log\log4cpp.h">
+      <Filter>src\tools\log</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\src\device\camera\dahua\dhcamera.cpp">
@@ -139,9 +139,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\device\intercom\oeasyintercom\oeasyintercom.cpp">
       <Filter>src\device\intercom\oeasyintercom</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\src\tools\log\log4cpp.cpp">
-      <Filter>src\tools\log</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\OeasyMidSdk.cpp">
       <Filter>src</Filter>
@@ -159,10 +156,10 @@
       <Filter>src\common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\platform\thread\AutoLock.cpp">
-      <Filter>src\platform\thread</Filter>
+      <Filter>src\platform\socket\thread</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\platform\thread\Thread.cpp">
-      <Filter>src\platform\thread</Filter>
+      <Filter>src\platform\socket\thread</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\tools\json\oeasyjson.cpp">
       <Filter>src\tools\json</Filter>
@@ -172,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\src\platform\socket\OeasySocket.cpp">
       <Filter>src\platform\socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\src\tools\log\log4cpp.cpp">
+      <Filter>src\tools\log</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

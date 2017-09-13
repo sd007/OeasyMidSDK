@@ -1,10 +1,5 @@
 #include<iostream>
 #include "log4cpp.h"
-#include<log4cpp/PatternLayout.hh>
-#include<log4cpp/OstreamAppender.hh>
-#include<log4cpp/FileAppender.hh>
-#include<log4cpp/RollingFileAppender.hh>
-#include<log4cpp/Priority.hh>
 
 using namespace std;
 
@@ -24,6 +19,11 @@ Oeasylog& Oeasylog::getInstance() {
 	return *m_plog;
 }
 
+//销毁
+Oeasylog::~Oeasylog() {
+
+}
+
 
 //销毁
 void Oeasylog::destory() {
@@ -31,6 +31,7 @@ void Oeasylog::destory() {
 		m_plog->m_category_ref.info("log4cpp destroy");
 		m_plog->m_category_ref.shutdown();
 		delete m_plog;
+		m_plog = NULL;
 	}
 }
 
@@ -54,12 +55,14 @@ m_logfilename (std::string("log4cpp.log"))
 		new log4cpp::OstreamAppender("osAppender",&std::cout);
 	os_appender->setLayout(pattern_one);
 
+	m_os_appender = os_appender;
 	//获取文件日志输出 
 	//http://blog.csdn.net/wyb19890515/article/details/7187057
 	
 	log4cpp::FileAppender *file_appender = 
 		new log4cpp::RollingFileAppender("RollingFileAppender", m_logfilename, MAX_LOGSIZE, LOGFILE_SIZE);
 	file_appender->setLayout(pattern_two);
+	m_file_appender = file_appender;
 
 	m_category_ref.setPriority(log4cpp::Priority::DEBUG);
 	m_category_ref.addAppender(os_appender);
