@@ -1,3 +1,7 @@
 # OeasyMidSDK
-Oeasy IPC，Intercom 中间件
-Linux,Windows平台
+
+IPC，Intercom SDK
+
+platform:
+
+Linux & Windows
