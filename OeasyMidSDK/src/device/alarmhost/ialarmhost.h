@@ -18,6 +18,7 @@ public:
 	virtual CameraId loginCamera(_OEASY_LOGINFO loginfo, _OEASY_LOGIN_RESULTINFO resultInfo) {return 0;}
 	virtual OEASY_S32 logoutCamera() {return 0;}
 	virtual void setLiveDataCB( LIVEDATACALLBACK videoDataCB, void *pUser ){}
+	virtual void setExceptionCB(EXCEPTIONCALLBACK cb, void * pUser) {}
 	virtual LiveplayId openVideo(_STREAMTYPE streamtype, OEASY_BOOL bstartsms = OEASY_FALSE, OEASY_CHAR* mediaserverurl = "") {return 0;}
 	virtual OEASY_BOOL closeVideo(LiveplayId handle) {return OEASY_TRUE;}
 	virtual OEASY_S32 captureImage( OEASY_U8 *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned ) {return 0;}

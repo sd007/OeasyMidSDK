@@ -1,7 +1,7 @@
 #include "OeasyMidSdk.h"
 #include "devicefactory.h"
 #include "BaseType.h"
-#include "log4cpp.h"
+#include "oeasylog.h"
 #include "OeasyMidDefines.h"
 #include "HandleManager.h"
 #include "Tick.h"
@@ -81,7 +81,6 @@ OEASY_API void stdcall Oeasy_DeinitAll()
 #endif
 	CHandleManager::ReleaseInstance();
 	CTick::ReleaseInstance();
-	logInstance.destory();
 }
 
 OEASY_API void stdcall Oeasy_ReleaseHandle( OEASYHANDLE handle)

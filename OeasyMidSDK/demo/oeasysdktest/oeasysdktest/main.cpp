@@ -21,7 +21,7 @@ void videoDataCallBack(long lPlayHandle,  unsigned char *pBuffer, unsigned long 
 {
 	cout<<"videoDataCallBack  get ....................... "<<bufferSize<<endl;
 }
-static int count = 0;
+static int g_count = 0;
 static int g_handle = 0;
 void AlarmMsg(ALARMTYPE alarmType, long lLoginID, char *msgBuf, unsigned long msgBufLen, char *deviceIP, long devicePort, void *pUSer)
 {
@@ -34,7 +34,7 @@ void AlarmMsg(ALARMTYPE alarmType, long lLoginID, char *msgBuf, unsigned long ms
 	{
 		FILE *fp;
 		char filename[128] = {0};
-		sprintf(filename, "d:/img/abc%d.jpg",count++);
+		sprintf(filename, "d:/img/abc%d.jpg", g_count++);
 		fp = fopen(filename,"wb");
 		fwrite(picBuffer, retSize, 1, fp);
 		fflush(fp);

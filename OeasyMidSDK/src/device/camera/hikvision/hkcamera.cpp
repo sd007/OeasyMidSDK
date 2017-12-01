@@ -1,6 +1,6 @@
 #include "hkcamera.h"
 #include "HCNetSDK.h"
-#include "log4cpp.h"
+#include "oeasylog.h"
 using namespace OeasyMid_HK;
 
 
@@ -17,14 +17,16 @@ HKCamera::~HKCamera()
 
 }
 /**************************CALLBACK***********************/
-void HKCamera::exceptionCB( DWORD dwType, LONG lUserID, LONG lHandle, void *pUser )
+void CALLBACK HKCamera::exceptionCallBack(DWORD dwType, LONG lUserID, LONG lHandle, void *pUser)
 {
 	char tempbuf[256] = {0};
 	HKCamera* currentCamera = (HKCamera*)pUser;
 	switch(dwType) 
 	{
+	case EXCEPTION_PREVIEW:
 	case EXCEPTION_RECONNECT:    //Ô¤ÀÀÊ±ÖØÁ¬
 		OEASYLOG_W("----------reconnect--------%d\n", time(NULL));
+		(*currentCamera->m_exceptionCB)((long)lUserID, (unsigned long)dwType, currentCamera->m_pUserData);
 		break;
 	default:
 		break;
@@ -176,10 +178,16 @@ OEASY_BOOL HKCamera::closeVideo(LiveplayId liveid)
 }
 
 
+void OeasyMid_HK::HKCamera::setExceptionCB(EXCEPTIONCALLBACK cb, void * pUser) 
+{
+	m_exceptionCB = cb;
+	m_pUserData = pUser;
+}
 void OeasyMid_HK::HKCamera::setLiveDataCB( LIVEDATACALLBACK videoDataCB, void *pUser )
 {
 	m_liveDataCB = videoDataCB;
 	m_pUserData = pUser;
+	NET_DVR_SetExceptionCallBack_V30(NULL, NULL, exceptionCallBack, this);
 }
 
 OeasyMid::OEASY_S32 OeasyMid_HK::HKCamera::captureImage( OEASY_U8 *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned )
@@ -187,7 +195,9 @@ OeasyMid::OEASY_S32 OeasyMid_HK::HKCamera::captureImage( OEASY_U8 *picBuffer, OE
 	NET_DVR_JPEGPARA jpegPara;
 	jpegPara.wPicSize=0xff;
 	jpegPara.wPicQuality=1;
-	BOOL ret = NET_DVR_CaptureJPEGPicture_NEW(m_cameraID,  1, &jpegPara, (char*)picBuffer, bufferSize, sizeReturned);
+	LPDWORD retSize = 0;
+	BOOL ret = NET_DVR_CaptureJPEGPicture_NEW(m_cameraID,  1, &jpegPara, (char*)picBuffer, bufferSize, retSize);
+	*sizeReturned= (OEASY_DWORD)retSize;
 	return ret;
 }
 
@@ -254,16 +264,18 @@ BOOL CALLBACK OeasyMid_HK::HKCamera::MsgCallBack( LONG lCommand, NET_DVR_ALARMER
 			switch(alarmInfo.dwAlarmType)
 			{
 			case 3: //motion detect alarm
-				//for (int i =0 ;i < 16; i++)
-				//{
-				//	if (alarmInfo.dwChannel[i] == 1)
-					if(currentCamera->m_alarmMsgCB)
-					{
-						(*currentCamera->m_alarmMsgCB)((ALARMTYPE)_MOVEDETECT_ALARM, pAlarmer->lUserID, pAlarmInfo, dwBufLen, pAlarmer->sDeviceIP, 0, currentCamera->m_pAlarmUserData );
-						OEASYLOG_I("move detect from ip: %s",pAlarmer->sDeviceIP);
-					}
-				//}
+				if(currentCamera->m_alarmMsgCB)
+				{
+					(*currentCamera->m_alarmMsgCB)((ALARMTYPE)_MOVEDETECT_ALARM, pAlarmer->lUserID, pAlarmInfo, dwBufLen, pAlarmer->sDeviceIP, 0, currentCamera->m_pAlarmUserData );
+					OEASYLOG_I("move detect from ip: %s",pAlarmer->sDeviceIP);
+				}
 			}
+		}
+	case COMM_ALARM_FACE:
+		{
+
+			(*currentCamera->m_alarmMsgCB)((ALARMTYPE)_FACEDETECT_ALARM, pAlarmer->lUserID, pAlarmInfo, dwBufLen, pAlarmer->sDeviceIP, 0, currentCamera->m_pAlarmUserData );
+			OEASYLOG_I("face detect from ip: %s",pAlarmer->sDeviceIP);
 		}
 		break;
 	case COMM_ALARM_V30:
@@ -271,15 +283,11 @@ BOOL CALLBACK OeasyMid_HK::HKCamera::MsgCallBack( LONG lCommand, NET_DVR_ALARMER
 			switch(alarmInfo.dwAlarmType)
 			{
 			case 3: //motion detect alarm
-			//	for (int i =0 ;i < 16; i++)
-			//	{
-			//		if (alarmInfo.dwChannel[i] == 1)
-					if(currentCamera->m_alarmMsgCB)
-					{
-						(*currentCamera->m_alarmMsgCB)((ALARMTYPE)_MOVEDETECT_ALARM, pAlarmer->lUserID, pAlarmInfo, dwBufLen, pAlarmer->sDeviceIP, 0, currentCamera->m_pAlarmUserData );
-						 OEASYLOG_I("move detect from ip: %s",pAlarmer->sDeviceIP);
-					}
-			//	}
+				if(currentCamera->m_alarmMsgCB)
+				{
+					(*currentCamera->m_alarmMsgCB)((ALARMTYPE)_MOVEDETECT_ALARM, pAlarmer->lUserID, pAlarmInfo, dwBufLen, pAlarmer->sDeviceIP, 0, currentCamera->m_pAlarmUserData );
+					OEASYLOG_I("move detect from ip: %s",pAlarmer->sDeviceIP);
+				}
 			}
 		}
 		break;

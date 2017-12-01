@@ -1,6 +1,8 @@
 #include "dhcamera.h"
-#include "log4cpp.h"
+#include "oeasylog.h"
 #include "Tick.h"
+#include <stdlib.h>
+#include <string.h>
 #include "OeasyMidDefines.h"
 using namespace OeasyMid_DH;
 
@@ -91,7 +93,7 @@ void CALLBACK OeasyMid_DH::DHCamera::MsgCallBack( LONG lCommand, LLONG lLoginID,
 		{
 			if (curCamera->m_alarmMsgCB)
 			{
-				(*curCamera->m_alarmMsgCB)((ALARMTYPE)_FACEDETECT_ALARM, lLoginID, pBuf, (unsigned long)dwBufLen, pchDVRIP,nDVRPort, curCamera->m_pAlarmUserData);
+				(*curCamera->m_alarmMsgCB)((ALARMTYPE)_FACEDETECT_ALARM, lLoginID, pBuf, (unsigned long)dwBufLen, pchDVRIP, nDVRPort, curCamera->m_pAlarmUserData);
 			}
 		}
 		break;
@@ -99,7 +101,7 @@ void CALLBACK OeasyMid_DH::DHCamera::MsgCallBack( LONG lCommand, LLONG lLoginID,
 		{
 			if (curCamera->m_alarmMsgCB)
 			{
-	//			(*curCamera->m_alarmMsgCB)((ALARMTYPE)_MOVEDETECT_ALARM, lLoginID, pBuf, (unsigned long)dwBufLen, pchDVRIP,nDVRPort, curCamera->m_pAlarmUserData);
+				(*curCamera->m_alarmMsgCB)((ALARMTYPE)_MOVEDETECT_ALARM, lLoginID, pBuf, (unsigned long)dwBufLen, pchDVRIP, nDVRPort, curCamera->m_pAlarmUserData);
 			}
 		}
 		break;
@@ -112,7 +114,7 @@ void CALLBACK OeasyMid_DH::DHCamera::MsgCallBack( LONG lCommand, LLONG lLoginID,
 		{
 			if (curCamera->m_alarmMsgCB)
 			{
-	///			(*curCamera->m_alarmMsgCB)((ALARMTYPE)_MOVEDETECT_ALARM, lLoginID, pBuf, (unsigned long)dwBufLen, pchDVRIP,nDVRPort, curCamera->m_pAlarmUserData);
+				(*curCamera->m_alarmMsgCB)((ALARMTYPE)_MOVEDETECT_ALARM, lLoginID, pBuf, (unsigned long)dwBufLen, pchDVRIP, nDVRPort, curCamera->m_pAlarmUserData);
 			}		
 		}
 		break;
@@ -154,6 +156,12 @@ OeasyMid::OEASY_S32 OeasyMid_DH::DHCamera::logoutCamera()
 		OEASYLOG_E("DH logoutCamera error, m_cameraID = %d", m_cameraID);
 	}
 	return ret;
+}
+
+void OeasyMid_DH::DHCamera::setExceptionCB(EXCEPTIONCALLBACK cb, void * pUser) 
+{
+	m_exceptionCB = cb;
+	m_pUserData = pUser;
 }
 
 void OeasyMid_DH::DHCamera::setLiveDataCB( LIVEDATACALLBACK videoDataCB, void *pUser )

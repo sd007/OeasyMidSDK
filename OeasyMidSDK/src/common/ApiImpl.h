@@ -27,6 +27,7 @@ public:
 	OEASY_S32 IPC_Login(OEASY_LOGINFO* loginfo, OEASY_LOGIN_RESULTINFO* resultInfo);
 	OEASY_S32 IPC_LoginOut();
 	void IPC_SetLiveDataCB(LIVEDATACALLBACK videoDataCB, void *pUser );
+	void IPC_SetExceptionCB( EXCEPTIONCALLBACK exceptionCB, void *pUser );
 	OEASY_DWORD IPC_StartLive(STREAMTYPE streamtype, bool bstartsms = false, char* mediaserverurl = "");
 	OEASY_S32 IPC_StopLive(OEASY_DWORD livehandle);
 	OEASY_S32 IPC_CaptureImage(OEASY_U8 *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned);

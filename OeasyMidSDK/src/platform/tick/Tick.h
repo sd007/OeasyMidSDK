@@ -2,7 +2,7 @@
 #define __OEASY_PLATFORM_TICK__
 #include "BaseType.h"
 #include "Thread.h"
-#include "log4cpp.h"
+#include "oeasylog.h"
 
 namespace OeasyMid{
 class CTick

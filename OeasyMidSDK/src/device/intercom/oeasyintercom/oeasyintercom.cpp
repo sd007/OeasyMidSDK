@@ -1,5 +1,5 @@
 #include "oeasyintercom.h"
-#include "log4cpp.h"
+#include "oeasylog.h"
 
 OeasyIntercom::OeasyIntercom():m_serverPort(0)
 {
@@ -61,6 +61,11 @@ void* OeasyIntercom::ThreadServerWork()
 	TMSG msg;
 	OEASY_DWORD heart = 0;
 	char recvBuffer[512] = {0};
+	fd_set sockSet;
+	OEASY_BOOL bgetSock;
+	int i;
+	int on = 1;  
+	bool bAccept = false;
 Reconnect:
 	int serverSockfd = m_serverSock->CreateSocket(AF_INET, SOCK_STREAM);
 	OEASYLOG_I("ThreadServerWork  will bind port: %d", m_serverPort);
@@ -83,7 +88,7 @@ Reconnect:
 	}
 	m_serverSock->Listen();
 	//服务端尽可能使用SO_REUSEADDR,在绑定之前尽可能调用setsockopt来设置SO_REUSEADDR套接字选项。该选项可以使得server不必等待TIME_WAIT状态消失就可以重启服务器
-	int on = 1;  
+	//int on = 1;  
 	m_serverSock->Setsockopt(m_serverSock->Getsocket(), SOL_SOCKET, SO_REUSEADDR, &on, sizeof(on));
 	m_serverSock->SetNonBlock(true);
 
@@ -100,7 +105,6 @@ Reconnect:
 			}
 		}
 
-		fd_set sockSet;
 		FD_ZERO(&sockSet);
 		FD_SET(m_serverSock->Getsocket(), &sockSet);
 		struct timeval socktimeout;
@@ -109,11 +113,11 @@ Reconnect:
 		while(OeasySocket::Select(m_serverSock->Getsocket()+1, &sockSet, NULL, NULL, &socktimeout) > 0){
 			if (FD_ISSET(m_serverSock->Getsocket(), &sockSet))
 			{
-				OEASY_BOOL bgetSock= OEASY_FALSE;
-				for (int i =0; i< Max_Count_Intercom; i++)
+				bgetSock= OEASY_FALSE;
+				for (i =0; i< Max_Count_Intercom; i++)
 				{
-					bool bok = m_serverSock->Accept(&m_dataSock[i]);
-					if (bok)
+					bAccept = m_serverSock->Accept(&m_dataSock[i]);
+					if (bAccept)
 					{	
 						m_bdataSockUse[i] = OEASY_TRUE;
 						bgetSock = OEASY_TRUE;
@@ -136,7 +140,7 @@ Reconnect:
 				break;
 			}
 		}
-		Sleep(50);
+		SLEEP(50);
 	}
 	OEASYLOG_W("ThreadServerWork will Quit!");
 	m_serverSock->CloseSocket();
@@ -153,6 +157,10 @@ void* OeasyIntercom::ThreadDataWork()
 	TMSG msg;
 	OEASY_BOOL bReconnet = OEASY_FALSE;
 	OEASY_CHAR recvBuffer[RECV_SIZE] = {0};
+	int maxSocketfd = 0;
+	fd_set sockSet;
+	int i = 0;
+	int ret = 0;
 	while(1)
 	{
 		while(m_hDataThread.PeekMsg(msg))
@@ -165,10 +173,9 @@ void* OeasyIntercom::ThreadDataWork()
 				break;
 			}
 		}
-		int maxSocketfd = 0;
-		fd_set sockSet;
+		maxSocketfd = 0;
 		FD_ZERO(&sockSet);
-		for(int i =0 ;i < Max_Count_Intercom && m_bdataSockUse[i]; i++)
+		for(i =0 ;i < Max_Count_Intercom && m_bdataSockUse[i]; i++)
 		{
 			FD_SET(m_dataSock[i].Getsocket(), &sockSet);
 			maxSocketfd = (maxSocketfd > m_dataSock[i].Getsocket())? maxSocketfd : (maxSocketfd = m_dataSock[i].Getsocket());
@@ -178,11 +185,11 @@ void* OeasyIntercom::ThreadDataWork()
 		socktimeout.tv_usec=50000;
 		while(OeasySocket::Select(maxSocketfd+1, &sockSet, NULL, NULL, &socktimeout) > 0)
 		{
-			for (int i =0 ;i < Max_Count_Intercom && m_bdataSockUse[i]; i++)
+			for (i =0 ;i < Max_Count_Intercom && m_bdataSockUse[i]; i++)
 			{
 				if(FD_ISSET( m_dataSock[i].Getsocket(), &sockSet))
 				{
-					int ret = SOCK_RECV(m_dataSock[i].Getsocket(), (char*)recvBuffer, RECV_SIZE, 0);
+					ret = SOCK_RECV(m_dataSock[i].Getsocket(), (char*)recvBuffer, RECV_SIZE, 0);
 					if (ret > 0)
 					{
 						

@@ -46,7 +46,10 @@ namespace OeasyMidIPC{
 
 #define IPCLiveHandle long
 
+
 //callback
+typedef void (*EXCEPTIONCALLBACK) (long lHandle,  unsigned long excptionType, void *pUSer);
+
 typedef void (*LIVEDATACALLBACK) (long lPlayHandle,  unsigned char *pBuffer, unsigned long bufferSize, void *pUSer);
 
 typedef void (*ALARMMESGCALLBACK)(ALARMTYPE alarmType, long lLoginID, char *msgBuf, unsigned long msgBufLen, char *deviceIP, long devicePort, void *pUSer);
@@ -59,6 +62,8 @@ OEASY_API int stdcall Oeasy_IPC_Destroy(OEASYHANDLE handle);
 OEASY_API int stdcall Oeasy_IPC_Login(OEASYHANDLE handle, OEASY_LOGINFO* loginfo, OEASY_LOGIN_RESULTINFO* resultInfo);
 
 OEASY_API int stdcall Oeasy_IPC_Logout(OEASYHANDLE handle);
+
+OEASY_API int stdcall Oeasy_IPC_SetExceptionCB(OEASYHANDLE handle, EXCEPTIONCALLBACK exceptionCB, void *pUser);
 
 OEASY_API int stdcall Oeasy_IPC_SetLiveDataCB(OEASYHANDLE handle, LIVEDATACALLBACK videoDataCB, void *pUser);
 

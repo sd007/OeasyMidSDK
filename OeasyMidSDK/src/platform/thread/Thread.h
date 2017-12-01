@@ -2,7 +2,7 @@
 #ifndef __OEASYMID_PLATFORM_THREAD__
 #define __OEASYMID_PLATFORM_THREAD__
 #include "BaseType.h"
-#include "log4cpp.h"
+#include "oeasylog.h"
 namespace OeasyMid
 {
 	typedef enum{

@@ -1,5 +1,7 @@
 #include "OeasySocket.h"
-#include "log4cpp.h"
+#include "oeasylog.h"
+
+#define SOCKET_ERROR            (-1)
 
 OeasySocket::OeasySocket()
 {
@@ -57,7 +59,8 @@ int OeasySocket::Bind(unsigned short port )
 	sockaddr_in serAddr;
 	serAddr.sin_family = AF_INET;
 	serAddr.sin_port = OEASY_HTONS(port);
-	serAddr.sin_addr.S_un.S_addr = INADDR_ANY;
+	serAddr.sin_addr.s_addr = OEASY_HTONL( INADDR_ANY );  
+
 	if(SOCK_BIND(m_socket, (sockaddr *)&serAddr, sizeof(serAddr)) == SOCKET_ERROR){
 		return -1;
 	}

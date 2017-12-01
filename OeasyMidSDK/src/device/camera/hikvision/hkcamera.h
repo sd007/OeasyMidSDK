@@ -23,6 +23,7 @@ namespace OeasyMid_HK{
 		virtual _CAMERATYPE getCameraType();
 		virtual CameraId loginCamera(_OEASY_LOGINFO loginfo, _OEASY_LOGIN_RESULTINFO resultInfo);
 		virtual OEASY_S32 logoutCamera();
+		virtual void setExceptionCB(EXCEPTIONCALLBACK cb, void * pUser);
 		virtual void setLiveDataCB( LIVEDATACALLBACK videoDataCB, void *pUser );
 		virtual LiveplayId openVideo(_STREAMTYPE streamtype, OEASY_BOOL bstartsms = OEASY_FALSE, OEASY_CHAR* mediaserverurl = "");
 		virtual OEASY_BOOL closeVideo(LiveplayId liveid);
@@ -33,7 +34,7 @@ namespace OeasyMid_HK{
 		virtual OEASY_S32 stopAlarm();
 
 		//callback 
-		static void exceptionCB(DWORD dwType, LONG lUserID, LONG lHandle, void *pUser);
+		static void CALLBACK exceptionCallBack(DWORD dwType, LONG lUserID, LONG lHandle, void *pUser);
 		static void CALLBACK realDataCallback(LONG lPlayHandle, DWORD dwDataType, BYTE *pBuffer, DWORD dwBufSize, void* pUser);
 		//alarm
 		static BOOL CALLBACK MsgCallBack(LONG lCommand, NET_DVR_ALARMER *pAlarmer, char *pAlarmInfo, DWORD dwBufLen, void* pUser);
@@ -44,6 +45,7 @@ namespace OeasyMid_HK{
 		OEASY_BOOL m_bmainstartSMS; //主码流是否上传到流服务器
 		OEASY_BOOL m_bsubstartSMS; //子码流是否上传到流服务器
 		LIVEDATACALLBACK m_liveDataCB;
+		EXCEPTIONCALLBACK m_exceptionCB;
 		void *m_pUserData; 
 		ALARMMESGCALLBACK m_alarmMsgCB;
 		void *m_pAlarmUserData;

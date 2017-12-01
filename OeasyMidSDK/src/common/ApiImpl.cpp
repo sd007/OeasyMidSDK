@@ -2,7 +2,7 @@
 #include "cameradefine.h"
 #include "intercomdefine.h"
 #include "alarmhostdefine.h"
-#include "log4cpp.h"
+#include "oeasylog.h"
 
 CApiImpl::CApiImpl(void)
 	:m_deviceModel(NO_DEVICE),
@@ -169,6 +169,11 @@ OeasyMid::OEASY_S32 CApiImpl::IPC_StopLive( OEASY_DWORD livehandle )
 void CApiImpl::IPC_SetLiveDataCB( LIVEDATACALLBACK videoDataCB, void *pUser )
 {
 	return m_curDevice->setLiveDataCB(videoDataCB, pUser);
+}
+
+void CApiImpl::IPC_SetExceptionCB( EXCEPTIONCALLBACK exceptionCB, void *pUser )
+{
+	return m_curDevice->setExceptionCB(exceptionCB, pUser);
 }
 
 OeasyMid::OEASY_S32 CApiImpl::IPC_CaptureImage( OEASY_U8 *picBuffer, OEASY_DWORD bufferSize, OEASY_DWORD* sizeReturned )

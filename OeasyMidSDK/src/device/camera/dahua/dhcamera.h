@@ -25,6 +25,7 @@ namespace OeasyMid_DH{
 		virtual _CAMERATYPE getCameraType();
 		virtual CameraId loginCamera(_OEASY_LOGINFO loginfo, _OEASY_LOGIN_RESULTINFO resultInfo);
 		virtual OEASY_S32 logoutCamera();
+		virtual void setExceptionCB(EXCEPTIONCALLBACK cb, void * pUser); 
 		virtual void setLiveDataCB( LIVEDATACALLBACK videoDataCB, void *pUser );
 		virtual LiveplayId openVideo(_STREAMTYPE streamtype, OEASY_BOOL bstartsms = OEASY_FALSE, OEASY_CHAR* mediaserverurl = "");
 		virtual OEASY_BOOL closeVideo(LiveplayId liveid);
@@ -49,6 +50,7 @@ namespace OeasyMid_DH{
 		OEASY_BOOL m_bmainstartSMS; //主码流是否上传到流服务器
 		OEASY_BOOL m_bsubstartSMS; //子码流是否上传到流服务器
 		LIVEDATACALLBACK m_liveDataCB;
+		EXCEPTIONCALLBACK m_exceptionCB;
 		void *m_pUserData; 
 		ALARMMESGCALLBACK m_alarmMsgCB;
 		void *m_pAlarmUserData;

@@ -1,5 +1,5 @@
 #include "HandleManager.h"
-#include "log4cpp.h"
+#include "oeasylog.h"
 
 
 static CHandleManager gHandleManager;

@@ -126,7 +126,7 @@
     <ClInclude Include="..\..\..\..\src\platform\socket\OeasySocket.h">
       <Filter>src\platform\socket</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\src\tools\log\log4cpp.h">
+    <ClInclude Include="..\..\..\..\src\tools\log\oeasylog.h">
       <Filter>src\tools\log</Filter>
     </ClInclude>
   </ItemGroup>
@@ -170,7 +170,7 @@
     <ClCompile Include="..\..\..\..\src\platform\socket\OeasySocket.cpp">
       <Filter>src\platform\socket</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\src\tools\log\log4cpp.cpp">
+    <ClCompile Include="..\..\..\..\src\tools\log\oeasylog.cpp">
       <Filter>src\tools\log</Filter>
     </ClCompile>
   </ItemGroup>
